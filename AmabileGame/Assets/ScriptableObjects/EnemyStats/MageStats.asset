@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5eb2d170e0881d4da629dc384612e59, type: 3}
+  m_Name: MageStats
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  MaxHealth: 100
+  BaseDamage: 15
+  MoveSpeed: 3.5
+  DetectionRadius: 15
+  AttackRange: 2
+  AttackCooldown: 1.5
+  FieldOfView: 110
+  EyesHeight: 1.6
+  StaggerDuration: 0.25
+  Multipliers: []

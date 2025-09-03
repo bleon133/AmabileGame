@@ -4,11 +4,16 @@ using UnityEngine.AI;
 public class Perseguir : MonoBehaviour
 {
     public Transform jugador;
-    public NavMeshAgent enemigo;
+    private NavMeshAgent enemigo;
 
-    // Update is called once per frame
+    void Awake()
+    {
+        enemigo = GetComponent<NavMeshAgent>();
+    }
+
     void Update()
     {
-        enemigo.destination = jugador.position;
+        if (jugador != null)
+            enemigo.destination = jugador.position;
     }
 }
