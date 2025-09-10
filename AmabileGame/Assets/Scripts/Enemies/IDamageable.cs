@@ -2,7 +2,6 @@ using UnityEngine;
 
 /// <summary>
 /// Contrato para todo objeto que pueda recibir daño.
-/// Permite tratar de forma uniforme a jugador, enemigos, jefes u objetos destructibles.
 /// </summary>
 public interface IDamageable
 {

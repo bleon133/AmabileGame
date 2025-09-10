@@ -2,37 +2,34 @@ using UnityEngine;
 
 /// <summary>
 /// ScriptableObject con los parámetros de balance de un enemigo.
-/// Permite ajustar valores sin tocar código (vida, daño, movimiento, radios, etc.).
 /// </summary>
 [CreateAssetMenu(menuName = "Enemies/Stats", fileName = "NewEnemyStats")]
 public class EnemyStats : ScriptableObject
 {
     [Header("Vida y daño")]
-    public float MaxHealth = 100f;   // Vida máxima.
-    public float BaseDamage = 15f;   // Daño base por ataque.
+    public float MaxHealth = 100f;
+    public float BaseDamage = 15f;
 
     [Header("Movimiento / Percepción")]
-    public float MoveSpeed = 3.5f;       // Velocidad de movimiento (NavMeshAgent).
-    public float DetectionRadius = 15f;  // Radio de detección del jugador (en metros).
-    public float AttackRange = 2f;       // Distancia máxima para ejecutar un ataque melee/disparo.
-    public float AttackCooldown = 1.5f;  // Tiempo mínimo entre ataques.
+    public float MoveSpeed = 3.5f;
+    public float DetectionRadius = 15f;
+    public float AttackRange = 2f;
+    public float AttackCooldown = 1.5f;
 
-    [Tooltip("Distancia mínima a la que el enemigo se detiene del jugador (espacio personal).")]
+    [Tooltip("Distancia a la que el enemigo se detiene del jugador. Se clamp a AttackRange - 0.05.")]
+    [Min(0f)]
     public float StopDistance = 1.2f;
 
     [Range(30f, 360f)]
-    public float FieldOfView = 110f; // (Reservado si en el futuro reactivas FOV).
-    public float EyesHeight = 1.6f;  // Altura de los "ojos" para raycasts de visión.
+    public float FieldOfView = 110f; // (reservado para futuro)
+    public float EyesHeight = 1.6f;
 
     [Header("Reacciones")]
-    public float StaggerDuration = 0.25f; // Tiempo detenido al recibir daño (feedback).
+    public float StaggerDuration = 0.25f;
 
     [Header("Multiplicadores por tipo de daño")]
-    public DamageMultiplier[] Multipliers; // Vulnerabilidades/resistencias por tipo.
+    public DamageMultiplier[] Multipliers;
 
-    /// <summary>
-    /// Devuelve el multiplicador asociado a un tipo de daño, o 1 si no hay configuración.
-    /// </summary>
     public float GetDamageMultiplier(DamageType type)
     {
         if (Multipliers == null || Multipliers.Length == 0) return 1f;
@@ -40,14 +37,21 @@ public class EnemyStats : ScriptableObject
             if (m.type == type) return Mathf.Max(0f, m.multiplier);
         return 1f;
     }
+
+    /// <summary>
+    /// Garantiza que el stoppingDistance no quede fuera de rango de ataque
+    /// para evitar que el enemigo jamás alcance a atacar.
+    /// </summary>
+    public float GetClampedStopDistance()
+    {
+        float maxStop = Mathf.Max(0f, AttackRange - 0.05f);
+        return Mathf.Clamp(StopDistance, 0f, maxStop);
+    }
 }
 
-/// <summary>
-/// Estructura serializable para configurar multiplicadores por tipo de daño en EnemyStats.
-/// </summary>
 [System.Serializable]
 public struct DamageMultiplier
 {
-    public DamageType type;   // Tipo de daño.
-    public float multiplier;  // Ej: 2 = doble daño, 0.5 = mitad, 0 = inmune.
+    public DamageType type;
+    public float multiplier;  // 2 = doble daño, 0.5 = mitad, 0 = inmune
 }

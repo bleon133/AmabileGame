@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   MaxHealth: 100
   BaseDamage: 15
-  MoveSpeed: 3.5
+  MoveSpeed: 5
   DetectionRadius: 15
   AttackRange: 2
   AttackCooldown: 1.5
-  StopDistance: 3
-  FieldOfView: 180
+  StopDistance: 1.2
+  FieldOfView: 100
   EyesHeight: 1.6
   StaggerDuration: 0.25
   Multipliers: []
