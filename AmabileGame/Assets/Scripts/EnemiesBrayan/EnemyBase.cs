@@ -18,7 +18,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private IDamageable targetDamageable;                   // cache robusto
 
     [Header("Stats")]
-    [SerializeField] protected EnemyStats stats;
+    [SerializeField] protected EnemyStatsBrayan stats;
 
     [Header("Visión / Obstáculos")]
     [Tooltip("Si está activo, las paredes u obstáculos con collider bloquean la visión.")]

@@ -4,7 +4,7 @@ using UnityEngine;
 /// ScriptableObject con los parámetros de balance de un enemigo.
 /// </summary>
 [CreateAssetMenu(menuName = "Enemies/Stats", fileName = "NewEnemyStats")]
-public class EnemyStats : ScriptableObject
+public class EnemyStatsBrayan : ScriptableObject
 {
     [Header("Vida y daño")]
     public float MaxHealth = 100f;
