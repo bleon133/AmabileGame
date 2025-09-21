@@ -1,4 +1,0 @@
-repository "AmabileGame/AmabileGame@4673254147895@cloud"
-  path "/"
-    br "/main"
-    co "/main"
