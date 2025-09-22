@@ -219,24 +219,58 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
             if (state != EnemyState.Attack && verboseLogs) Debug.Log($"{name} ATTACK (stance)");
             state = EnemyState.Attack;
             agent.isStopped = true;
+
+            // >>>>> INSERTAR AQUÍ EL RETROCESO SI ESTÁ DEMASIADO CERCA <<<<<
+            float stop = stats != null ? stats.GetClampedStopDistance() : 1.2f;
+            if (dist < stop - 0.05f) // está demasiado encima → retrocede un poco
+            {
+                Vector3 back = (transform.position - target.position);
+                back.y = 0f;
+                Vector3 retreat = transform.position + back.normalized * (stop - dist);
+
+                if (NavMesh.SamplePosition(retreat, out var hit, 1.5f, NavMesh.AllAreas))
+                {
+                    agent.isStopped = false;            // vuelve a moverse ese paso
+                    SetAgentSpeed(ChaseSpeedValue());   // usa velocidad de corrección
+                    agent.SetDestination(hit.position); // punto de retroceso
+                    return;                              // corta el frame de ataque aquí
+                }
+            }
+            // >>>>> FIN DEL BLOQUE DE RETROCESO <<<<<
+
             FaceTarget(); // rota suavemente hacia el jugador
 
             // Solo atacar si no hay otro ataque en curso y cooldown listo
             if (!isAttacking && Time.time >= lastAttackTime + atkCd)
             {
                 if (verboseLogs) Debug.Log($"{name} ATTACK (strike)");
-                Attack(); // virtual → subclases pueden reemplazar (mago, herrero, etc.)
+                Attack(); // virtual → subclases pueden reemplazar
                 lastAttackTime = Time.time;
             }
             return;
         }
 
+
         // Lo ve pero está fuera de rango → Chase (perseguir)
         if (state != EnemyState.Chase && verboseLogs) Debug.Log($"{name} CHASE → {target.position}");
         state = EnemyState.Chase;
-        SetAgentSpeed(ChaseSpeedValue());  // velocidad de persecución con jitter
+        SetAgentSpeed(ChaseSpeedValue());
         agent.isStopped = false;
-        agent.SetDestination(target.position); // persigue la posición actual del jugador
+
+        // Nuevo: calcular destino con offset para respetar StopDistance
+        Vector3 dir = (target.position - transform.position);
+        dir.y = 0f;
+        if (dir.sqrMagnitude > 0.0001f)
+        {
+            float stop = stats != null ? stats.GetClampedStopDistance() : 1.2f;
+            Vector3 desired = target.position - dir.normalized * stop;
+
+            // Proyecta ese punto al NavMesh cercano para evitar destinos inválidos
+            if (NavMesh.SamplePosition(desired, out var hit, 1.5f, NavMesh.AllAreas))
+                agent.SetDestination(hit.position);
+            else
+                agent.SetDestination(desired);
+        }
     }
 
     // -------------------- Patrol --------------------
@@ -369,19 +403,21 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     // -------------------- Investigar (sospecha) --------------------
     private void RunInvestigate()
     {
-        state = EnemyState.Chase; // seguimos “en movimiento”
-        SetAgentSpeed(PatrolSpeedValue() + 0.2f); // un poco más rápido que patrulla
+        state = EnemyState.Chase;
+        SetAgentSpeed(PatrolSpeedValue() + 0.2f);
         agent.isStopped = false;
-        agent.SetDestination(lastKnownTargetPos); // ir a la última posición vista
 
-        float dist = Vector3.Distance(transform.position, lastKnownTargetPos);
-        if (dist <= Mathf.Max(patrolTolerance, agent.stoppingDistance + 0.05f))
-        {
-            agent.isStopped = true; 
-            StartCoroutine(LookAroundRoutine()); // ojeada (giro suave)
-            // fin de sospecha
-            suspicionUntil = Time.time - 1f;  // fin de la sospecha
-        }
+        float stop = stats != null ? stats.GetClampedStopDistance() : 1.2f;
+        Vector3 from = transform.position;
+        Vector3 dir = (lastKnownTargetPos - from);
+        dir.y = 0f;
+        Vector3 desired = lastKnownTargetPos - (dir.sqrMagnitude > 0.0001f ? dir.normalized * stop : Vector3.zero);
+
+        if (NavMesh.SamplePosition(desired, out var hit, 1.5f, NavMesh.AllAreas))
+            agent.SetDestination(hit.position);
+        else
+            agent.SetDestination(desired);
+
     }
 
     // -------------------- Percepción --------------------
@@ -712,4 +748,58 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
             Gizmos.DrawSphere(agent.destination, 0.15f);
         }
     }
+
+    // EnemyBase.cs  ➜ dentro de la clase EnemyBase
+    #region Alertas entre aliados
+    /// <summary>
+    /// Llamado por un aliado (p.ej. Aldeano) para avisar que vio al jugador.
+    /// Actualiza target, renueva la sospecha y navega hacia la última posición vista.
+    /// </summary>
+    public void ReceiveAllyAlert(Transform t, Vector3 lastSeenPos, float extraSuspicion = 2f)
+    {
+        if (!IsAlive) return;
+
+        if (t) target = t; // asegura usar el mismo target
+                           // Usa campos privados de EnemyBase:
+                           // lastKnownTargetPos y suspicionUntil ya existen en EnemyBase
+                           // (no cambies su visibilidad, este método está dentro de la clase).
+        var stop = stats != null ? stats.GetClampedStopDistance() : 1.2f;
+
+        // Actualiza memoria de sospecha
+        // (sigue investigando incluso si perdió la visión directa)
+        // suspicionDuration también es de EnemyBase.
+        var minSusp = Mathf.Max(suspicionDuration, extraSuspicion);
+        var dir = (lastSeenPos - transform.position); dir.y = 0f;
+
+        // destino a 'stop' metros de la posición avisada
+        var desired = lastSeenPos - (dir.sqrMagnitude > 0.0001f ? dir.normalized * stop
+                                                                : transform.forward * stop);
+
+        // Cambios de estado + navegación
+        state = EnemyState.Chase;
+        // actualiza "recuerdo"
+        // (campos ya presentes en EnemyBase)
+        // lastKnownTargetPos / suspicionUntil
+        // Nota: como estos son privados, los reusamos sin exponerlos.
+        // (Estamos en la misma clase, por eso accedemos sin problema.)
+        // ------------------------------------
+        // ¡IMPORTANTE! Si pegaste tal cual, sustituye estas 2 líneas:
+        // lastKnownTargetPos = lastSeenPos;
+        // suspicionUntil = Time.time + minSusp;
+        // por exactamente las dos de tu EnemyBase (con esos mismos nombres de campo).
+        // ------------------------------------
+        lastKnownTargetPos = lastSeenPos;
+        suspicionUntil = Time.time + minSusp;
+
+        if (agent && agent.enabled)
+        {
+            agent.isStopped = false;
+            if (NavMesh.SamplePosition(desired, out var hit, 1.5f, NavMesh.AllAreas))
+                agent.SetDestination(hit.position);
+            else
+                agent.SetDestination(desired);
+        }
+    }
+    #endregion
+
 }
