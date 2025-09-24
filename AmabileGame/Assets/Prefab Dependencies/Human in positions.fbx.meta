@@ -3,7 +3,32 @@ guid: 68fced1ce9d6ae9458170b29d4bfaf28
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nail Metal
+    second: {fileID: 2100000, guid: 47a0eaf596b7d984a882422394e210cd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: People
+    second: {fileID: 2100000, guid: 6d3d77ee3c34ea9429b37d72de560ede, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rope
+    second: {fileID: 2100000, guid: 1abec3ca2b8bc1f45a3d5c95e4203d26, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: darkened wood
+    second: {fileID: 2100000, guid: 628748e6aaade0a40922cb3f1ab85c04, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: light_wood
+    second: {fileID: 2100000, guid: 9fa5a50af0cba3f4c941a6fd3de75968, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
