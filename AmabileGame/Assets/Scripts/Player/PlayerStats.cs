@@ -61,6 +61,14 @@ public class PlayerStats : LivingEntity
         UpdateUI();
     }
 
+    public void SetUI(UnityEngine.UI.Image health, UnityEngine.UI.Image stamina)
+    {
+        healthBarFill = health;
+        staminaBarFill = stamina;
+        UpdateUI();
+    }
+
+
     private void UpdateUI()
     {
         if (staminaBarFill)
