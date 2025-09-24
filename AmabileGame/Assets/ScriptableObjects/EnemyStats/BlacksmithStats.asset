@@ -16,9 +16,9 @@ MonoBehaviour:
   BaseDamage: 15
   MoveSpeed: 10
   DetectionRadius: 15
-  AttackRange: 2
+  AttackRange: 4
   AttackCooldown: 1.5
-  StopDistance: 1.2
+  StopDistance: 2
   FieldOfView: 100
   EyesHeight: 1.6
   StaggerDuration: 0.25
