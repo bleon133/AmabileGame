@@ -132,8 +132,7 @@ GameObject:
   - component: {fileID: 276797}
   - component: {fileID: 276796}
   - component: {fileID: 276795}
-  - component: {fileID: 276800}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,18 +260,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &276800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a100d189600279946838928b344f4f1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
 --- !u!1 &13141335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,6 +1609,7 @@ GameObject:
   - component: {fileID: 1419083518}
   - component: {fileID: 1419083519}
   - component: {fileID: 1419083520}
+  - component: {fileID: 1419083521}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -1744,9 +1732,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfd98def2c596f4d918cd3390fea462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  MaxHealth: 100
+  maxHealth: 100
+  maxStamina: 100
   healthBarFill: {fileID: 929262442}
-  MaxStamina: 100
   staminaBarFill: {fileID: 1608804832}
   regenRate: 15
   regenDelay: 2
@@ -1762,12 +1750,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f0d7cb8e6e2644282aee76568b2549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoiseEmitter
-  walkRadius: 5
-  runExtraRadius: 5
-  crouchMultiplier: 0.5
-  enemyMask:
+  listenerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1024
+--- !u!114 &1419083521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419083514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de20e4c28b4106645b858c29eeff5976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerNoise
+  walkRadius: 5
+  runExtraRadius: 3
+  crouchMultiplier: 0.5
   emitInterval: 0.3
 --- !u!4 &1531892466 stripped
 Transform:
