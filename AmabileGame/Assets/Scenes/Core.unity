@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829077582d414e8479bb456402e0f1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrap
-  firstLevelName: HerreroBoss
+  firstLevelName: Poor Area
 --- !u!4 &618053811
 Transform:
   m_ObjectHideFlags: 0

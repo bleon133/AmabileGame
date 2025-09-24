@@ -2375,7 +2375,7 @@ MonoBehaviour:
   meleeRadius: 4
   damageableMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   usePatrol: 1
   patrolPoints:
   - {fileID: 975816324}
