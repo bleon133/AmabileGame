@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5eb2d170e0881d4da629dc384612e59, type: 3}
-  m_Name: BlacksmithStats
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  m_Name: VillageStats
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatsBrayan
   MaxHealth: 100
   BaseDamage: 15
-  MoveSpeed: 10
   DetectionRadius: 15
-  AttackRange: 4
+  AttackRange: 2
   AttackCooldown: 1.5
-  StopDistance: 2
-  FieldOfView: 100
   EyesHeight: 1.6
-  PatrolSpeed: 5
-  ChaseSpeed: 8
-  SpeedJitter: 0.4
+  FieldOfView: 110
+  MoveSpeed: 3.5
+  PatrolSpeed: 2.8
+  ChaseSpeed: 3.5
+  SpeedJitter: 0.3
   Acceleration: 8
   AngularSpeed: 120
   AutoBraking: 0
   Avoidance: 4
+  StopDistance: 1.2
   UseObstaclesForVision: 1
   SuspicionDuration: 4
   LookAroundTimeRange: {x: 0.5, y: 1.2}
   LookAroundAngleRange: {x: -75, y: 75}
-  PatrolWaitAtPoint: 0.2
+  PatrolWaitAtPoint: 0.5
   PatrolTolerance: 0.25
-  DwellTimeRange: {x: 0.2, y: 0.5}
+  DwellTimeRange: {x: 0.6, y: 2}
   WaypointWanderRadius: 1.2
   ChanceSkipPoint: 0.15
   ChanceReverse: 0.1

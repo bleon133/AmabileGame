@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Blacksmith
   layers:
   - Default
   - TransparentFX
@@ -16,6 +17,8 @@ TagManager:
   - No Obstaculo
   - Suelo
   - Enemy
+  - 
+  - 
   - 
   - 
   - 
