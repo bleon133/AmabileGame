@@ -1762,11 +1762,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f0d7cb8e6e2644282aee76568b2549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoiseEmitter
-  baseRadius: 3
+  walkRadius: 5
   runExtraRadius: 5
+  crouchMultiplier: 0.5
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
+  emitInterval: 0.3
 --- !u!4 &1531892466 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6d06a13de3bc49d4186572c2c3fc50ca, type: 3}
