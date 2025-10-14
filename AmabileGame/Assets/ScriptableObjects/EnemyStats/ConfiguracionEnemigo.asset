@@ -16,7 +16,7 @@ MonoBehaviour:
   velocidadCorrer: 4.5
   aceleracion: 20
   velocidadAngular: 360
-  distanciaDetencion: 0.6
+  distanciaDetencion: 3
   usarAutoBraking: 0
   radioPatrulla: 16
   esperaMin: 1.5
@@ -24,3 +24,17 @@ MonoBehaviour:
   intentosMaximosMuestreo: 8
   intervaloRecalculoRuta: 0.25
   maxDistanciaMuestreo: 2
+  anguloVision: 110
+  distanciaVision: 16
+  alturaOjos: 1.6
+  mascaraObstaculos:
+    serializedVersion: 2
+    m_Bits: 0
+  mascaraJugador:
+    serializedVersion: 2
+    m_Bits: 0
+  intervaloVision: 0.15
+  perderVistaTras: 1.2
+  duracionBusqueda: 8
+  radioBusqueda: 6
+  puntosBusqueda: 3

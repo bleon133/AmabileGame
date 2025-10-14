@@ -103,6 +103,21 @@ public class MovimientoEnemigo : MonoBehaviour
         return false;
     }
 
+    // Cambiar velocidad en runtime (ya lo tienes si seguiste pasos previos)
+    public void SetVelocidad(float velocidad)
+    {
+        if (agente) agente.speed = velocidad;
+    }
+
+    /// <summary>
+    /// Permite/impide que el NavMeshAgent controle la rotación automáticamente.
+    /// Útil para búsquedas en sitio donde rotamos manualmente el transform.
+    /// </summary>
+    public void SetUpdateRotation(bool habilitar)
+    {
+        if (agente) agente.updateRotation = habilitar;
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

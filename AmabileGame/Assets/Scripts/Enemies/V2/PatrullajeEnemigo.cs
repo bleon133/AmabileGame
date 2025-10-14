@@ -21,6 +21,11 @@ public class PatrullajeEnemigo : MonoBehaviour
     [SerializeField, Tooltip("Mostrar gizmos del radio de patrulla y destino.")]
     private bool dibujarGizmos = true;
 
+    [Header("Control externo")]
+    [SerializeField, Tooltip("Si está en pausa, no elige ni sigue destinos de patrulla.")]
+    private bool pausado = false;
+
+
     private MovimientoEnemigo mover;
     private Vector3 posicionInicial;
     private Vector3 centroActivo;
@@ -59,6 +64,8 @@ public class PatrullajeEnemigo : MonoBehaviour
 
     private void Update()
     {
+        if (pausado) return;
+
         // Actualiza 'centroActivo' si se asignó un transform
         if (centroPatrulla != null)
             centroActivo = centroPatrulla.position;
@@ -154,6 +161,24 @@ public class PatrullajeEnemigo : MonoBehaviour
         esperando = true;
         tieneDestino = false;
         tiempoEsperaRestante = 0.2f; // reintenta en 0.2s
+    }
+
+    /// <summary>
+    /// Pausa o reanuda la patrulla desde control externo (IA).
+    /// </summary>
+    public void SetPausa(bool pausa)
+    {
+        pausado = pausa;
+        if (pausado)
+        {
+            mover.Detener();
+        }
+        else
+        {
+            esperando = false;
+            tieneDestino = false;
+            ElegirNuevoDestino();
+        }
     }
 
 #if UNITY_EDITOR

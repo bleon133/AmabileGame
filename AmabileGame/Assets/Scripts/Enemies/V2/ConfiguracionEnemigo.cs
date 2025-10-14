@@ -43,4 +43,39 @@ public class ConfiguracionEnemigo : ScriptableObject
 
     [Tooltip("Distancia máxima para validar un punto contra el NavMesh.")]
     public float maxDistanciaMuestreo = 2.0f;
+
+
+    //------------------------------------------------------------------------
+
+    [Header("Visión")]
+    [Tooltip("Ángulo total del campo visual (grados). Ej: 110.")]
+    public float anguloVision = 110f;
+
+    [Tooltip("Distancia máxima de visión en línea recta.")]
+    public float distanciaVision = 16f;
+
+    [Tooltip("Altura de ojos respecto al suelo para el raycast de visión.")]
+    public float alturaOjos = 1.6f;
+
+    [Tooltip("Capa(s) que bloquean la visión (paredes, obstáculos).")]
+    public LayerMask mascaraObstaculos;
+
+    [Tooltip("Capa(s) del jugador para filtrar detección opcional (no imprescindible si lo referencias por Transform).")]
+    public LayerMask mascaraJugador;
+
+    [Tooltip("Cada cuánto (segundos) se chequea la visión.")]
+    public float intervaloVision = 0.15f;
+
+    [Tooltip("Tiempo (segundos) que el enemigo 'tolera' sin ver al jugador antes de pasar a sospecha/búsqueda.")]
+    public float perderVistaTras = 1.2f;
+
+    [Header("Sospecha y Búsqueda")]
+    [Tooltip("Cuánto dura la fase de búsqueda si no vuelve a verlo.")]
+    public float duracionBusqueda = 8f;
+
+    [Tooltip("Radio alrededor de la última posición conocida para merodear.")]
+    public float radioBusqueda = 6f;
+
+    [Tooltip("Cantidad de puntos aleatorios que explorará durante la búsqueda.")]
+    public int puntosBusqueda = 3;
 }
