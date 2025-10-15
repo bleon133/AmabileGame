@@ -27,8 +27,25 @@ public class PlayerStats : LivingEntity
         UpdateUI();
     }
 
+    public event System.Action OnFatigue;
+
+    private bool isTired;
+
     private void Update()
     {
+        bool nowTired = currentStamina < maxStamina * 0.3f;
+
+        if (nowTired && !isTired)
+        {
+            isTired = true;
+            OnFatigue?.Invoke();
+        }
+        else if (!nowTired && isTired)
+        {
+            isTired = false;
+        }
+
+
         if (GetCurrentHealth() <= 0f) return;
 
         // ---- Calcular límite dinámico de stamina ----

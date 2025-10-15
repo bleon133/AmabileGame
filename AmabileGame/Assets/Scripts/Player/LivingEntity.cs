@@ -26,11 +26,13 @@ public class LivingEntity : MonoBehaviour, IDamageable
         currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        OnDamaged?.Invoke();
-
         if (currentHealth <= 0f)
         {
             Die();
+        }
+        else
+        {
+            OnDamaged?.Invoke();
         }
     }
 
