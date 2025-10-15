@@ -1,11 +1,7 @@
-using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum NoiseType
-{
-    Player,    // Ruido generado por el jugador u objetos arrojadizos
-    AllyCall   // Ruido generado por un enemigo d�bil para llamar al boss
-}
+public enum NoiseType { Player, AllyCall }
 
 public struct NoiseInfo
 {
@@ -19,24 +15,61 @@ public struct NoiseInfo
     }
 }
 
-
 public class NoiseEmitter : MonoBehaviour
 {
-    [Header("Detecci�n de escuchas")]
-    [SerializeField] private LayerMask listenerMask;
+    [Header("Detección de escuchas")]
+    [SerializeField, Tooltip("Capas que contienen a los 'escuchas' (enemigos/boss, etc.).")]
+    private LayerMask listenerMask = ~0; // por defecto, todos
+
+    [SerializeField, Tooltip("¿Considerar colliders 'trigger' en el OverlapSphere?")]
+    private QueryTriggerInteraction triggers = QueryTriggerInteraction.Collide;
+
+    [Header("Debug")]
+    [SerializeField] private bool logDetalles = true;
+
+    // Buffer estático para minimizar GC (ajusta tamaño si esperas muchos escuchas).
+    private static readonly Collider[] _hits = new Collider[64];
+
+    private void OnValidate()
+    {
+        // Si en el Inspector quedó None (0), usamos Everything (~0) para no romper pruebas.
+        if (listenerMask == 0)
+        {
+            listenerMask = ~0;
+            // Nota: deja un comentario en consola solo en editor.
+#if UNITY_EDITOR
+            Debug.LogWarning("[NoiseEmitter] listenerMask estaba en NONE. Se ajustó automáticamente a Everything (~0).");
+#endif
+        }
+    }
 
     /// <summary>
-    /// Emite un ruido en la posici�n indicada con un radio espec�fico y tipo de ruido.
+    /// Emite un ruido en la posición indicada con un radio específico y tipo de ruido.
+    /// Notifica a objetos en 'listenerMask' que implementen INoiseListener o tengan OnNoiseHeard (SendMessageUpwards).
     /// </summary>
     public void EmitNoise(Vector3 position, float radius, NoiseType type)
     {
-        Collider[] hits = Physics.OverlapSphere(position, radius, listenerMask);
+        int count = Physics.OverlapSphereNonAlloc(position, radius, _hits, listenerMask, triggers);
+        var info = new NoiseInfo(position, type);
 
-        foreach (var hit in hits)
+        for (int i = 0; i < count; i++)
         {
-            hit.SendMessage("OnNoiseHeard", new NoiseInfo(position, type), SendMessageOptions.DontRequireReceiver);
+            var col = _hits[i];
+            if (col == null) continue;
+
+            var listener = col.GetComponentInParent<INoiseListener>();
+            if (listener != null)
+            {
+                listener.OnNoiseHeard(info);
+                if (logDetalles) Debug.Log($"[NoiseEmitter] → {col.name} (INoiseListener)");
+                continue;
+            }
+
+            col.SendMessageUpwards("OnNoiseHeard", info, SendMessageOptions.DontRequireReceiver);
+            if (logDetalles) Debug.Log($"[NoiseEmitter] → {col.name} (SendMessageUpwards)");
         }
 
-        Debug.Log($"[NoiseEmitter] Ruido emitido en {position}, radio {radius}, tipo {type}");
+        if (logDetalles)
+            Debug.Log($"[NoiseEmitter] Ruido @ {position}, r={radius}, tipo={type}, hits={count}, mask={listenerMask.value}");
     }
 }

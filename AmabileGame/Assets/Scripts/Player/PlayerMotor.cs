@@ -182,6 +182,8 @@ public class PlayerMotor : MonoBehaviour
         get { return isCrouching; }
     }
 
+    public float CurrentSpeed => new Vector3(cc.velocity.x, 0, cc.velocity.z).magnitude;
+
     public Vector2 MoveInput
     {
         get { return moveInput; }
