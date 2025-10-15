@@ -97,6 +97,9 @@ public class PlayerStats : LivingEntity
         // StartCoroutine(ReloadScene(3f));
     }
 
+    public float CurrentHealth => GetCurrentHealth();
+    public float MaxHealth => GetMaxHealth();
+
     [ContextMenu("Test Damage")]
     public void TestDamage()
     {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class LivingEntity : MonoBehaviour, IDamageable
 {
@@ -8,6 +9,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public bool IsAlive { get; private set; } = true;
 
+    public event Action OnDamaged;
+    public event Action OnDied;
     public System.Action<float, float> OnHealthChanged;
 
     protected virtual void Awake()
@@ -22,6 +25,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
         currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        OnDamaged?.Invoke();
 
         if (currentHealth <= 0f)
         {
@@ -47,5 +52,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         IsAlive = false;
         Debug.Log($"{gameObject.name} ha muerto.");
+        OnDied?.Invoke();
     }
 }
