@@ -1,27 +1,24 @@
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
 
-/// <summary>
-/// Sensor de oído del enemigo: recibe eventos de ruido y guarda la última posición.
-/// Solo detección (no cambia estados). Luego lo usaremos desde la IA.
-/// </summary>
 [DisallowMultipleComponent]
 public class OidoEnemigo : MonoBehaviour, INoiseListener
 {
     [Header("Filtros")]
-    [Tooltip("¿Escucha ruidos del jugador/objetos?")]
     [SerializeField] private bool escucharJugador = true;
-
-    [Tooltip("¿Escucha 'llamados' de aliados (p.ej., minion -> boss)?")]
     [SerializeField] private bool escucharAliado = true;
 
     [Header("Anti-spam")]
-    [Tooltip("Tiempo mínimo entre dos eventos aceptados (segundos).")]
     [SerializeField, Min(0f)] private float cooldown = 0.1f;
 
     [Header("Depuración")]
     [SerializeField] private bool dibujarGizmos = true;
-    [SerializeField] private Color colorUltimoRuido = new Color(1f, 0.5f, 0f, 0.9f);
+    [SerializeField] private bool persistirUltimoRuido = true;
+    [SerializeField] private float segundosPersistencia = 3f;
+    [SerializeField] private float radioGizmo = 0.35f;
+    [SerializeField] private float alturaGizmo = 0.1f;
+    [SerializeField] private Color colorSolido = new Color(1f, 0.5f, 0f, 0.35f);
+    [SerializeField] private Color colorBorde = new Color(1f, 0.5f, 0f, 1f);
+    [SerializeField] private bool logRecepcion = true;
 
     public bool TieneNuevoRuido { get; private set; }
     public Vector3 UltimaPosRuido { get; private set; }
@@ -29,15 +26,11 @@ public class OidoEnemigo : MonoBehaviour, INoiseListener
     public float TiempoUltimoRuido { get; private set; }
 
     private float _nextAllowedTime;
+    private float _ultimoDibujoTime;
 
-    /// <summary>
-    /// Implementación del contrato. Es llamado por el emisor.
-    /// </summary>
     public void OnNoiseHeard(NoiseInfo info)
     {
         if (Time.time < _nextAllowedTime) return;
-
-        // Filtrar por tipo
         if (info.type == NoiseType.Player && !escucharJugador) return;
         if (info.type == NoiseType.AllyCall && !escucharAliado) return;
 
@@ -45,27 +38,31 @@ public class OidoEnemigo : MonoBehaviour, INoiseListener
         UltimoTipoRuido = info.type;
         TiempoUltimoRuido = Time.time;
         TieneNuevoRuido = true;
-
+        _ultimoDibujoTime = Time.time;
         _nextAllowedTime = Time.time + cooldown;
 
-        // Debug opcional
-        // Debug.Log($"[OidoEnemigo] Ruido recibido: {info.type} en {info.position}");
+        if (logRecepcion)
+            Debug.Log($"[OidoEnemigo:{name}] Oyó {info.type} en {info.position}");
     }
 
-    /// <summary>
-    /// Útil cuando otro sistema (IA) ya consumió la señal.
-    /// </summary>
-    public void ConsumirRuido()
-    {
-        TieneNuevoRuido = false;
-    }
+    public void ConsumirRuido() => TieneNuevoRuido = false;
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (!dibujarGizmos || !TieneNuevoRuido) return;
-        Gizmos.color = colorUltimoRuido;
-        Gizmos.DrawSphere(UltimaPosRuido, 0.2f);
+        if (!dibujarGizmos) return;
+
+        bool debeDibujar =
+            TieneNuevoRuido ||
+            (persistirUltimoRuido && (Application.isPlaying ? (Time.time - _ultimoDibujoTime) <= segundosPersistencia : true));
+
+        if (!debeDibujar) return;
+
+        Vector3 p = UltimaPosRuido + Vector3.up * alturaGizmo;
+        Gizmos.color = colorSolido;
+        Gizmos.DrawSphere(p, radioGizmo);
+        Gizmos.color = colorBorde;
+        Gizmos.DrawWireSphere(p, radioGizmo);
     }
 #endif
 }

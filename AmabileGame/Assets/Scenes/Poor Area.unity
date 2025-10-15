@@ -8391,6 +8391,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1465892798843216266, guid: 19eaf3165ac16264b916774cdcad8801, type: 3}
   m_PrefabInstance: {fileID: 1299157480}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1310993603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3341442056468636279, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
+  m_PrefabInstance: {fileID: 1921791533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1310993604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310993603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de20e4c28b4106645b858c29eeff5976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerNoise
+  walkRadius: 5
+  runExtraRadius: 3
+  crouchMultiplier: 0.5
+  emitInterval: 0.3
+  logEmision: 1
+  drawPreviewGizmo: 1
 --- !u!1001 &1322745873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12587,10 +12610,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8609895412590853313, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
+      propertyPath: logDetalles
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609895412590853313, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
+      propertyPath: listenerMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3341442056468636279, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1310993604}
   m_SourcePrefab: {fileID: 100100000, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
 --- !u!1 &1957453699
 GameObject:
@@ -13810,7 +13844,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -14440,6 +14474,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pumpkinhulk L Shaw
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b2a7c2440f27e324cb98dee778814007, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1092408308860062549, guid: b2a7c2440f27e324cb98dee778814007, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 53.63562
@@ -14941,7 +14979,7 @@ GameObject:
   - component: {fileID: 8642727008262128681}
   - component: {fileID: 2649436950737278108}
   - component: {fileID: 8642727008262128682}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Herrero V2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15006,7 +15044,13 @@ MonoBehaviour:
   escucharAliado: 1
   cooldown: 0.1
   dibujarGizmos: 1
-  colorUltimoRuido: {r: 0.9528302, g: 0.1033731, b: 0.8140065, a: 0.9}
+  persistirUltimoRuido: 1
+  segundosPersistencia: 3
+  radioGizmo: 0.35
+  alturaGizmo: 0.1
+  colorSolido: {r: 1, g: 0.5, b: 0, a: 0.35}
+  colorBorde: {r: 0.2784474, g: 1, b: 0, a: 1}
+  logRecepcion: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
