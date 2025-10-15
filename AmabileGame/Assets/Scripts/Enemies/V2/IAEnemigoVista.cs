@@ -18,6 +18,7 @@ public class IAEnemigoVista : MonoBehaviour
     [SerializeField] private MovimientoEnemigo mover;
     [SerializeField] private PatrullajeEnemigo patrulla;
     [SerializeField] private AnimacionesEnemigo anim;
+    [SerializeField] private CombateEnemigo combate; // NUEVO
 
     // Estado principal
     private Estado estadoActual = Estado.PATROLL;
@@ -38,6 +39,8 @@ public class IAEnemigoVista : MonoBehaviour
 
     private void Reset()
     {
+        if (!combate) combate = GetComponent<CombateEnemigo>();
+
         mover = GetComponent<MovimientoEnemigo>();
         if (!vision) vision = GetComponent<SensorVisionEnemigo>();
         if (!oido) oido = GetComponent<OidoEnemigo>();       // ← NUEVO
@@ -47,6 +50,8 @@ public class IAEnemigoVista : MonoBehaviour
 
     private void Awake()
     {
+        if (!combate) combate = GetComponent<CombateEnemigo>();
+
         if (!mover) mover = GetComponent<MovimientoEnemigo>();
         if (!vision) vision = GetComponent<SensorVisionEnemigo>();
         if (!oido) oido = GetComponent<OidoEnemigo>();     // ← NUEVO
@@ -96,6 +101,15 @@ public class IAEnemigoVista : MonoBehaviour
     {
         if (vision != null && vision.VeJugador)
         {
+            // Si está a rango/ángulo y el cooldown lo permite, atacar.
+            if (combate != null && combate.EvaluarYAtacar(vision.JugadorTransform))
+            {
+                // Ya disparó animación de ataque y detuvo al agente este frame.
+                // No damos SetDestino para evitar pelear con el movimiento durante el ataque.
+                return;
+            }
+
+            // Si no ataca este frame, seguir persiguiendo
             puntoInteres = vision.UltimaPosicionVista;
             mover.SetDestino(puntoInteres);
             temporizadorPerderVista = config.perderVistaTras;

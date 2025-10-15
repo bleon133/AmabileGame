@@ -38,3 +38,11 @@ MonoBehaviour:
   duracionBusqueda: 8
   radioBusqueda: 6
   puntosBusqueda: 3
+  distanciaAtaque: 1.8
+  anguloAtaque: 100
+  radioGolpe: 0.6
+  danoGolpe: 20
+  cooldownAtaque: 1.2
+  capasObjetivo:
+    serializedVersion: 2
+    m_Bits: 128

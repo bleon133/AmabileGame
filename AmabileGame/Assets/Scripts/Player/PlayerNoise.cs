@@ -39,7 +39,7 @@ public class PlayerNoise : MonoBehaviour
                 noiseEmitter.EmitNoise(transform.position, radius, NoiseType.Player);
 
                 if (logEmision)
-                    Debug.Log($"[PlayerNoise] Emitió ruido r={radius} (running={motor.IsRunning}, crouch={motor.IsCrouching})");
+                    //Debug.Log($"[PlayerNoise] Emitió ruido r={radius} (running={motor.IsRunning}, crouch={motor.IsCrouching})");
 
                 emitTimer = 0f;
             }

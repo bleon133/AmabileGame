@@ -78,4 +78,26 @@ public class ConfiguracionEnemigo : ScriptableObject
 
     [Tooltip("Cantidad de puntos aleatorios que explorará durante la búsqueda.")]
     public int puntosBusqueda = 3;
+
+    //------------------------------------------------------------------------
+
+    [Header("Combate")]
+    [Tooltip("Distancia horizontal máxima para poder atacar.")]
+    public float distanciaAtaque = 1.8f;
+
+    [Tooltip("Ángulo total del cono de ataque (grados).")]
+    public float anguloAtaque = 100f;
+
+    [Tooltip("Radio del golpe (para OverlapSphere en el punto de impacto).")]
+    public float radioGolpe = 0.6f;
+
+    [Tooltip("Daño por golpe.")]
+    public float danoGolpe = 20f;
+
+    [Tooltip("Tiempo entre ataques (segundos).")]
+    public float cooldownAtaque = 1.2f;
+
+    [Tooltip("Capa(s) válidas como objetivo del ataque (ej: Player).")]
+    public LayerMask capasObjetivo;
+
 }

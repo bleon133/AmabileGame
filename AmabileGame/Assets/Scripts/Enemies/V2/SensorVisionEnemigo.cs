@@ -19,6 +19,7 @@ public class SensorVisionEnemigo : MonoBehaviour
     public float TiempoSinVer { get; private set; }
 
     private float _proximoChequeo;
+    public Transform JugadorTransform => jugador;
 
     private void Awake()
     {
