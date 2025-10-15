@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6195eaab9433042ab630fa295a6f0f, type: 3}
   m_Name: ConfiguracionEnemigo
   m_EditorClassIdentifier: Assembly-CSharp::ConfiguracionEnemigo
-  velocidadCaminar: 10
-  velocidadCorrer: 4.5
-  aceleracion: 20
+  velocidadCaminar: 5
+  velocidadCorrer: 6
+  aceleracion: 10
   velocidadAngular: 360
   distanciaDetencion: 3
   usarAutoBraking: 0
-  radioPatrulla: 16
+  radioPatrulla: 10
   esperaMin: 1.5
   esperaMax: 3.5
   intentosMaximosMuestreo: 8
   intervaloRecalculoRuta: 0.25
   maxDistanciaMuestreo: 2
   anguloVision: 110
-  distanciaVision: 16
+  distanciaVision: 6
   alturaOjos: 1.6
   mascaraObstaculos:
     serializedVersion: 2
