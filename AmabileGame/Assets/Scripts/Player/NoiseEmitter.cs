@@ -1,42 +1,87 @@
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
 
-public enum NoiseType
-{
-    Player,    // Ruido generado por el jugador u objetos arrojadizos
-    AllyCall   // Ruido generado por un enemigo débil para llamar al boss
-}
-
-public struct NoiseInfo
-{
-    public Vector3 position;
-    public NoiseType type;
-
-    public NoiseInfo(Vector3 pos, NoiseType t)
-    {
-        position = pos;
-        type = t;
-    }
-}
-
-
+[RequireComponent(typeof(PlayerMotor))]
 public class NoiseEmitter : MonoBehaviour
 {
-    [Header("Detección de escuchas")]
-    [SerializeField] private LayerMask listenerMask;
+    [Header("Ruido")]
+    [SerializeField] private float walkRadius = 5f;
+    [SerializeField] private float runExtraRadius = 3f;
+    [SerializeField] private float crouchMultiplier = 0.5f;
 
-    /// <summary>
-    /// Emite un ruido en la posición indicada con un radio específico y tipo de ruido.
-    /// </summary>
-    public void EmitNoise(Vector3 position, float radius, NoiseType type)
+    [Header("Detección de enemigos")]
+    [SerializeField] private LayerMask enemyMask;
+
+    [Header("Temporización")]
+    [SerializeField] private float emitInterval = 0.3f; // cada 0.3s (3 veces por segundo)
+    private float emitTimer;
+
+    private PlayerMotor motor;
+
+    private void Awake()
     {
-        Collider[] hits = Physics.OverlapSphere(position, radius, listenerMask);
+        motor = GetComponent<PlayerMotor>();
+    }
 
+    private void Update()
+    {
+        if (motor == null) return;
+
+        // Solo emitir si el jugador se está moviendo
+        if (motor.MoveInput.sqrMagnitude > 0.01f)
+        {
+            emitTimer += Time.deltaTime;
+            if (emitTimer >= emitInterval)
+            {
+                EmitNoise();
+                emitTimer = 0f;
+            }
+        }
+        else
+        {
+            emitTimer = 0f; // reset si se queda quieto
+        }
+    }
+
+    private void EmitNoise()
+    {
+        Color c;
+        float radius = ComputeCurrentRadius(out c);
+
+        // Debug
+        Debug.Log($"[NoiseEmitter] Ruido emitido: radio {radius}");
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, radius, enemyMask);
         foreach (var hit in hits)
         {
-            hit.SendMessage("OnNoiseHeard", new NoiseInfo(position, type), SendMessageOptions.DontRequireReceiver);
+            hit.SendMessage("OnNoiseHeard", transform.position, SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    private float ComputeCurrentRadius(out Color color)
+    {
+        float r = walkRadius;
+        color = Color.green;
+
+        if (motor.IsRunning)
+        {
+            r += runExtraRadius;
+            color = Color.red;
+        }
+        else if (motor.IsCrouching)
+        {
+            r *= crouchMultiplier;
+            color = Color.blue;
         }
 
-        Debug.Log($"[NoiseEmitter] Ruido emitido en {position}, radio {radius}, tipo {type}");
+        return r;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+        Color c;
+        float r = ComputeCurrentRadius(out c);
+        Gizmos.color = c;
+        Gizmos.DrawWireSphere(transform.position, r);
     }
 }

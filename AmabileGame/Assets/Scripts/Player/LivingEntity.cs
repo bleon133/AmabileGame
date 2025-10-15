@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class LivingEntity : MonoBehaviour, IDamageable
+public class LivingEntity : MonoBehaviour
 {
     [Header("Vida")]
     [SerializeField] private float maxHealth = 100f;
     private float currentHealth;
 
-    public bool IsAlive { get; private set; } = true;
-
+    
     public System.Action<float, float> OnHealthChanged;
 
     protected virtual void Awake()
@@ -15,12 +14,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
     }
 
-
-    public virtual void TakeDamage(float amount, DamageType damageType, Vector3 hitPoint, GameObject source)
+    
+    public virtual void TakeDamage(float amount)
     {
-        if (!IsAlive) return;
+        if (amount <= 0f) return;
 
-        currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
@@ -29,23 +30,31 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(float amount)
-        => TakeDamage(amount, DamageType.Physical, transform.position, gameObject);
-
     public virtual void Heal(float amount)
     {
-        if (!IsAlive) return;
+        if (amount <= 0f) return;
 
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0f, maxHealth);
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
-    public float GetCurrentHealth() => currentHealth;
-    public float GetMaxHealth() => maxHealth;
 
+    
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
 
+    
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    
     protected virtual void Die()
     {
-        IsAlive = false;
         Debug.Log($"{gameObject.name} ha muerto.");
     }
 }
