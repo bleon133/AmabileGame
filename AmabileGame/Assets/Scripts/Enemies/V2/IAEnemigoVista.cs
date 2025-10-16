@@ -37,8 +37,16 @@ public class IAEnemigoVista : MonoBehaviour
     private float inicioBusquedaTime;
     private float yawBase; // ángulo base desde el que se hace el barrido
 
+    [SerializeField, Tooltip("Si es true, este enemigo NO persigue; solo alerta al Herrero.")]
+    private bool esAldeano = false;
+
+    [SerializeField, Tooltip("Solo para Aldeano: componente que emite AllyCall.")]
+    private AlertaAliadoEnemigo alertaAliado;
+
     private void Reset()
     {
+        if (alertaAliado == null) alertaAliado = GetComponent<AlertaAliadoEnemigo>();
+
         if (!combate) combate = GetComponent<CombateEnemigo>();
 
         mover = GetComponent<MovimientoEnemigo>();
@@ -50,6 +58,8 @@ public class IAEnemigoVista : MonoBehaviour
 
     private void Awake()
     {
+        if (alertaAliado == null) alertaAliado = GetComponent<AlertaAliadoEnemigo>();
+
         if (!combate) combate = GetComponent<CombateEnemigo>();
 
         if (!mover) mover = GetComponent<MovimientoEnemigo>();
@@ -79,15 +89,25 @@ public class IAEnemigoVista : MonoBehaviour
 
     private void EstadoPatrulla()
     {
-        // 1) Si ve al jugador → Persecución
+        // 1) Si ve al jugador…
         if (vision != null && vision.VeJugador)
         {
+            // — ALDEANO: solo alerta y se queda (o podrías hacer que se aparte/huya si quieres)
+            if (esAldeano && alertaAliado != null)
+            {
+                alertaAliado.Alertar(vision.UltimaPosicionVista);
+                // Opcional: poner animación de "Buscar" o una de "asustado"
+                if (anim) anim.SetBuscar(true);
+                return; // importante: NO entrar a persecución
+            }
+
+            // — HERRERO (o cualquier no- aldeano): lo de siempre
             puntoInteres = vision.UltimaPosicionVista;
             EntrarPersecucion();
             return;
         }
 
-        // 2) Si oye un ruido → ir al punto de ruido
+        // 2) Si oye un ruido → ir al punto de ruido (ya lo tienes)
         if (oido != null && oido.TieneNuevoRuido)
         {
             puntoInteres = oido.UltimaPosRuido;

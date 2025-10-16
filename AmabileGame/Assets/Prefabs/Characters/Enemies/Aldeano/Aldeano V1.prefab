@@ -121,6 +121,8 @@ GameObject:
   - component: {fileID: 4186199459607411897}
   - component: {fileID: 7537635386773340418}
   - component: {fileID: 4835583794220727353}
+  - component: {fileID: 2212396668972065010}
+  - component: {fileID: 2497968178165175867}
   m_Layer: 10
   m_Name: Aldeano V1
   m_TagString: Untagged
@@ -271,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9065d24ea54d3a14695180b1b42029ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PatrullajeEnemigo
-  configuracion: {fileID: 11400000, guid: 9dec5b482dfe0cf49ac04322efb5611a, type: 2}
+  configuracion: {fileID: 11400000, guid: ee1128d6776ce7e45b90863275964818, type: 2}
   centroPatrulla: {fileID: 0}
   dibujarGizmos: 1
   pausado: 0
@@ -308,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2e113c2053094145b1cd156a2ae5723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SensorVisionEnemigo
-  config: {fileID: 11400000, guid: 9dec5b482dfe0cf49ac04322efb5611a, type: 2}
+  config: {fileID: 11400000, guid: ee1128d6776ce7e45b90863275964818, type: 2}
   jugador: {fileID: 0}
   dibujarGizmos: 1
 --- !u!114 &4186199459607411897
@@ -323,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89372441dbbb3d40b11b1d8fb587d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IAEnemigoVista
-  config: {fileID: 11400000, guid: 9dec5b482dfe0cf49ac04322efb5611a, type: 2}
+  config: {fileID: 11400000, guid: ee1128d6776ce7e45b90863275964818, type: 2}
   vision: {fileID: 6549021338467258658}
   oido: {fileID: 7537635386773340418}
   mover: {fileID: 3596102964057800661}
@@ -332,6 +334,8 @@ MonoBehaviour:
   combate: {fileID: 4835583794220727353}
   amplitudGiro: 60
   velocidadBarrido: 180
+  esAldeano: 0
+  alertaAliado: {fileID: 0}
 --- !u!114 &7537635386773340418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OidoEnemigo
   escucharJugador: 1
-  escucharAliado: 1
+  escucharAliado: 0
   cooldown: 0.1
   dibujarGizmos: 1
   persistirUltimoRuido: 1
@@ -367,12 +371,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82b9d43c72424a44be9bdfcc7e1cb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombateEnemigo
-  config: {fileID: 11400000, guid: 9dec5b482dfe0cf49ac04322efb5611a, type: 2}
+  config: {fileID: 11400000, guid: ee1128d6776ce7e45b90863275964818, type: 2}
   anim: {fileID: 2833474861440651063}
   mover: {fileID: 3596102964057800661}
   vision: {fileID: 6549021338467258658}
   puntoGolpe: {fileID: 3817227088881714973}
   dibujarGizmos: 1
+--- !u!114 &2212396668972065010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279075410932385521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f0d7cb8e6e2644282aee76568b2549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoiseEmitter
+  listenerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  triggers: 2
+  logDetalles: 1
+--- !u!114 &2497968178165175867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279075410932385521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfbbb392f381e3041b6a2adb71e99e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertaAliadoEnemigo
+  radioLlamado: 80
+  cooldown: 1.5
+  log: 1
+  mostrarPreviewEnAldeano: 1
+  mostrarUltimaEmision: 1
+  persistenciaUltimaEmision: 4
+  colorPreview: {r: 1, g: 0.8, b: 0, a: 0.12}
+  colorPreviewBorde: {r: 1, g: 0.6, b: 0, a: 1}
+  colorEmision: {r: 1, g: 0.25, b: 0, a: 0.22}
+  colorEmisionBorde: {r: 1, g: 0.2, b: 0, a: 1}
+  colorLinea: {r: 1, g: 0.5, b: 0, a: 0.8}
 --- !u!1001 &6085037196207124616
 PrefabInstance:
   m_ObjectHideFlags: 0

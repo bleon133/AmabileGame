@@ -24,7 +24,7 @@ MonoBehaviour:
   intentosMaximosMuestreo: 8
   intervaloRecalculoRuta: 0.25
   maxDistanciaMuestreo: 2
-  anguloVision: 110
+  anguloVision: 70
   distanciaVision: 6
   alturaOjos: 1.6
   mascaraObstaculos:

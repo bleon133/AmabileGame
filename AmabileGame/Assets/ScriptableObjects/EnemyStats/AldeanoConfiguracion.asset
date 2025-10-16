@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6195eaab9433042ab630fa295a6f0f, type: 3}
+  m_Name: AldeanoConfiguracion
+  m_EditorClassIdentifier: Assembly-CSharp::ConfiguracionEnemigo
+  velocidadCaminar: 2
+  velocidadCorrer: 3.6
+  aceleracion: 8
+  velocidadAngular: 540
+  distanciaDetencion: 1
+  usarAutoBraking: 0
+  radioPatrulla: 8
+  esperaMin: 1.2
+  esperaMax: 2.5
+  intentosMaximosMuestreo: 8
+  intervaloRecalculoRuta: 0.2
+  maxDistanciaMuestreo: 2
+  anguloVision: 50
+  distanciaVision: 7
+  alturaOjos: 1.5
+  mascaraObstaculos:
+    serializedVersion: 2
+    m_Bits: 0
+  mascaraJugador:
+    serializedVersion: 2
+    m_Bits: 0
+  intervaloVision: 0.12
+  perderVistaTras: 85
+  duracionBusqueda: 5
+  radioBusqueda: 5
+  puntosBusqueda: 2
+  distanciaAtaque: 1.2
+  anguloAtaque: 85
+  radioGolpe: 0.45
+  danoGolpe: 12
+  cooldownAtaque: 1.6
+  capasObjetivo:
+    serializedVersion: 2
+    m_Bits: 128
