@@ -215,7 +215,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -371,7 +371,7 @@ MonoBehaviour:
   anim: {fileID: 2833474861440651063}
   mover: {fileID: 3596102964057800661}
   vision: {fileID: 6549021338467258658}
-  puntoGolpe: {fileID: 0}
+  puntoGolpe: {fileID: 3817227088881714973}
   dibujarGizmos: 1
 --- !u!1001 &6085037196207124616
 PrefabInstance:
