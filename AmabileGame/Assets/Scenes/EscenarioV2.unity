@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.015
@@ -1326,7 +1326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1629113595602300538, guid: 557923e04121e254dbca0886c232d05c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.02
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1629113595602300538, guid: 557923e04121e254dbca0886c232d05c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2718,7 +2718,7 @@ Transform:
   m_GameObject: {fileID: 309051071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.4, y: 0, z: -23.5}
+  m_LocalPosition: {x: -7.8, y: 0, z: -23.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4435,6 +4435,10 @@ PrefabInstance:
       propertyPath: radioLlamado
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2612931332317763947, guid: ba3f378e7e011c94b859c2e4a9495c0f, type: 3}
+      propertyPath: config
+      value: 
+      objectReference: {fileID: 11400000, guid: ee1128d6776ce7e45b90863275964818, type: 2}
     - target: {fileID: 4186199459607411897, guid: ba3f378e7e011c94b859c2e4a9495c0f, type: 3}
       propertyPath: esAldeano
       value: 1
@@ -21868,7 +21872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &2061849886
 AudioSource:
   m_ObjectHideFlags: 0

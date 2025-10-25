@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6195eaab9433042ab630fa295a6f0f, type: 3}
   m_Name: ConfiguracionEnemigo
   m_EditorClassIdentifier: Assembly-CSharp::ConfiguracionEnemigo
-  velocidadCaminar: 2.5
-  velocidadCorrer: 3
-  aceleracion: 10
+  velocidadCaminar: 2
+  velocidadCorrer: 3.6
+  aceleracion: 8
   velocidadAngular: 360
   distanciaDetencion: 1.5
   usarAutoBraking: 0
