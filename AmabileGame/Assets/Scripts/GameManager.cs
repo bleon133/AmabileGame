@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> persistentObjects = new List<GameObject>();
 
     [SerializeField] private CinemachineCamera cineCam;
+    [SerializeField] private CinemachineOrbitalFollow cineCamAxis;
 
     [Header("Escenas donde NO deben existir")]
     [SerializeField] private string[] forbiddenScenes = { "Menu" };
@@ -94,6 +95,8 @@ public class GameManager : MonoBehaviour
                 camTarget.LookAtTarget = target;
                 cineCam.Target = camTarget;       // re-asignar
             }
+
+            cineCamAxis.HorizontalAxis.Value = player.transform.eulerAngles.y;
         }
     }
 }

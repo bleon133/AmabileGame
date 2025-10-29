@@ -105,6 +105,14 @@ public class PlayerMotor : MonoBehaviour
 
         HandleCrouchToggle();
 
+        // Si está corriendo y agachado, hacer que se levante
+        if (isCrouching && runHeld)
+        {
+            // Si está agachado, sacarlo del estado agachado
+            isCrouching = false;
+            HandleCrouchToggle();  // Llama al método que ajusta la altura y la posición
+        }
+
         Vector3 desiredDir = GetDesiredDirection(moveInput);
         float targetSpeed = GetTargetSpeed();
         Vector3 desiredVel = desiredDir * targetSpeed;
@@ -147,6 +155,7 @@ public class PlayerMotor : MonoBehaviour
             debugTimer = 0f;
         }
     }
+
 
     private Vector3 GetDesiredDirection(Vector2 input)
     {
