@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829077582d414e8479bb456402e0f1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrap
-  firstLevelName: EscenarioV2
+  firstLevelName: EscenarioV3
 --- !u!4 &618053811
 Transform:
   m_ObjectHideFlags: 0
@@ -2185,6 +2185,7 @@ MonoBehaviour:
   - {fileID: 1623303583}
   - {fileID: 1894315043}
   cineCam: {fileID: 1747651451}
+  cineCamAxis: {fileID: 0}
   forbiddenScenes:
   - Menu
 --- !u!4 &2050158729
