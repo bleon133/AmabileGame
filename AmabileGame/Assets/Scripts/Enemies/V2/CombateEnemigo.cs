@@ -27,6 +27,7 @@ public class CombateEnemigo : MonoBehaviour
     private bool atacando;
     private Transform objetivoActual;
     private bool golpeAplicadoEnEsteCiclo;
+    private Rigidbody rb;
 
     private void Reset()
     {
@@ -40,6 +41,8 @@ public class CombateEnemigo : MonoBehaviour
         if (!mover) mover = GetComponent<MovimientoEnemigo>();
         if (!anim) anim = GetComponent<AnimacionesEnemigo>();
         if (!vision) vision = GetComponent<SensorVisionEnemigo>();
+
+        rb = GetComponent<Rigidbody>();
     }
 
     private Transform OrigenGolpe => puntoGolpe != null ? puntoGolpe : transform;
@@ -105,7 +108,10 @@ public class CombateEnemigo : MonoBehaviour
     /// (Opcional) Evento al iniciar el clip para resetear bandera de golpe.
     /// </summary>
     /// 
-    public void AnimEvent_InicioAtaque() { golpeAplicadoEnEsteCiclo = false; }
+    public void AnimEvent_InicioAtaque() 
+    { 
+        golpeAplicadoEnEsteCiclo = false;
+    }
     public void AnimEvent_FinAtaque()
     {
         atacando = false;

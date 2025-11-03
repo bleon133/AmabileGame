@@ -22,6 +22,38 @@ public class UIManager : MonoBehaviour
 
     public bool IsPaused { get; private set; }
 
+    // ======== NUEVO: Overlays (p.ej. panel pergamino) ========
+    [Header("Overlays")]
+    [Tooltip("Si hay un overlay abierto (p.ej. pergamino), bloquear el toggle de pausa (Escape/Start).")]
+    [SerializeField] private bool blockPauseWhenOverlayOpen = true;
+
+    private int overlayHolds = 0; // contador por si en el futuro hay más de un overlay
+    public bool HasOverlayHold => overlayHolds > 0;
+
+    private void ApplyTimeAndCursor()
+    {
+        // Pausado si el menú de pausa está activo o hay overlays activos
+        bool shouldPause = IsPaused || HasOverlayHold;
+
+        Time.timeScale = shouldPause ? 0f : 1f;
+        AudioListener.pause = shouldPause;
+        Cursor.visible = shouldPause;
+        Cursor.lockState = shouldPause ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void PushOverlayHold()
+    {
+        overlayHolds++;
+        ApplyTimeAndCursor();
+    }
+
+    public void PopOverlayHold()
+    {
+        overlayHolds = Mathf.Max(0, overlayHolds - 1);
+        ApplyTimeAndCursor();
+    }
+    // =========================================================
+
     private void Awake()
     {
         if (Instance == null)
@@ -49,6 +81,13 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        // >>> Bloquear toggle de pausa si hay un overlay activo (ej. pergamino)
+        if (blockPauseWhenOverlayOpen &&
+            (HasOverlayHold || (ScrollPanelController.Instance != null && ScrollPanelController.Instance.IsOpen)))
+        {
+            return;
+        }
+
         // --- Teclado: Escape para toggle ---
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             TogglePause();
@@ -137,15 +176,13 @@ public class UIManager : MonoBehaviour
     private void SetPaused(bool value)
     {
         IsPaused = value;
-        Time.timeScale = IsPaused ? 0f : 1f;
-        AudioListener.pause = IsPaused;
-        Cursor.visible = IsPaused;
-        Cursor.lockState = IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        ApplyTimeAndCursor(); // <<< ahora centralizado (respeta overlays)
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (pauseModal != null) pauseModal.SetActive(false);
+        overlayHolds = 0;          // <<< aseguramos limpiar overlays al cambiar de escena
         SetPaused(false);
     }
 
