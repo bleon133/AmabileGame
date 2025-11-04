@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2771294938574147379}
   - component: {fileID: 3483720716820695661}
-  - component: {fileID: 4957276522199474758}
+  - component: {fileID: 1624793806245124655}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 302090772949195521}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000009536743, y: 0}
+  m_SizeDelta: {x: 60.585197, y: 60.585197}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3483720716820695661
 CanvasRenderer:
@@ -45,7 +45,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44937917207531369}
   m_CullTransparentMesh: 1
---- !u!114 &4957276522199474758
+--- !u!114 &1624793806245124655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,9 +54,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 44937917207531369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -65,13 +65,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 603b41322fb317544867136318e8936e, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2249380321110378065
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,6 +88,7 @@ GameObject:
   - component: {fileID: 35258635853191127}
   - component: {fileID: 901154505142218612}
   - component: {fileID: 8092242412137009390}
+  - component: {fileID: 7139742857835776918}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -209,6 +213,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotSelector
   normalColor: {r: 0.43529412, g: 0.3137255, b: 0.21176471, a: 0.25}
   selectedColor: {r: 0.43529412, g: 0.3137255, b: 0.21176471, a: 1}
+--- !u!114 &7139742857835776918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249380321110378065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0604f5fcebe1741a71dae18b994ba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  icon: {fileID: 1624793806245124655}
+  qtyText: {fileID: 0}
+  background: {fileID: 0}
 --- !u!1 &7039682575231116169
 GameObject:
   m_ObjectHideFlags: 0

@@ -191,8 +191,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoiseEmitter
   listenerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3072
   triggers: 2
+  logDetalles: 1
 --- !u!114 &978472992332684388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +210,8 @@ MonoBehaviour:
   runExtraRadius: 3
   crouchMultiplier: 0.5
   emitInterval: 0.3
+  logEmision: 1
+  drawPreviewGizmo: 1
 --- !u!95 &4785758408792566659
 Animator:
   serializedVersion: 7
