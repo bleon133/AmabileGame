@@ -15,18 +15,24 @@ public class SlotSelector : MonoBehaviour, ISelectHandler, IDeselectHandler
     private void Awake()
     {
         slotImage = GetComponent<Image>();
-        slotImage.color = normalColor;
+        if (slotImage != null)
+            slotImage.color = normalColor;
     }
 
-    // ?? Cuando el slot es seleccionado por el EventSystem
     public void OnSelect(BaseEventData eventData)
     {
         if (slotImage != null)
             slotImage.color = selectedColor;
     }
 
-    // ?? Cuando se pierde la selección
     public void OnDeselect(BaseEventData eventData)
+    {
+        if (slotImage != null)
+            slotImage.color = normalColor;
+    }
+
+    // ?? Llamado manualmente por el Inventory al cerrar
+    public void ForceDeselect()
     {
         if (slotImage != null)
             slotImage.color = normalColor;

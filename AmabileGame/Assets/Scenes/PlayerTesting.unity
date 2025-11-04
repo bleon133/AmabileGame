@@ -132,7 +132,8 @@ GameObject:
   - component: {fileID: 27818972}
   - component: {fileID: 27818971}
   - component: {fileID: 27818970}
-  m_Layer: 0
+  - component: {fileID: 27818975}
+  m_Layer: 12
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &27818971
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -168,7 +169,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -245,6 +246,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &27818975
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27818969}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &29590458
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +286,8 @@ GameObject:
   - component: {fileID: 29590461}
   - component: {fileID: 29590460}
   - component: {fileID: 29590459}
-  m_Layer: 0
+  - component: {fileID: 29590464}
+  m_Layer: 12
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,8 +306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &29590460
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -294,7 +323,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -371,6 +400,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &29590464
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29590458}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &233183141
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +440,8 @@ GameObject:
   - component: {fileID: 233183144}
   - component: {fileID: 233183143}
   - component: {fileID: 233183142}
-  m_Layer: 0
+  - component: {fileID: 233183147}
+  m_Layer: 12
   m_Name: Cube (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,8 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &233183143
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -420,7 +477,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -497,6 +554,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &233183147
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233183141}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &462764194
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +593,7 @@ GameObject:
   - component: {fileID: 462764197}
   - component: {fileID: 462764196}
   - component: {fileID: 462764195}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Suelo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +705,8 @@ GameObject:
   - component: {fileID: 516611282}
   - component: {fileID: 516611281}
   - component: {fileID: 516611280}
-  m_Layer: 0
+  - component: {fileID: 516611285}
+  m_Layer: 12
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,8 +725,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &516611281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -657,7 +742,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -734,6 +819,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &516611285
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516611279}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &799803877
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +859,8 @@ GameObject:
   - component: {fileID: 799803880}
   - component: {fileID: 799803879}
   - component: {fileID: 799803878}
-  m_Layer: 0
+  - component: {fileID: 799803883}
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -766,8 +879,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &799803879
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -783,7 +896,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -860,6 +973,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &799803883
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799803877}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1011752822
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +1013,8 @@ GameObject:
   - component: {fileID: 1011752825}
   - component: {fileID: 1011752824}
   - component: {fileID: 1011752823}
-  m_Layer: 0
+  - component: {fileID: 1011752828}
+  m_Layer: 12
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,8 +1033,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &1011752824
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -909,7 +1050,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -986,6 +1127,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1011752828
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011752822}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1116942413
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1167,8 @@ GameObject:
   - component: {fileID: 1116942416}
   - component: {fileID: 1116942415}
   - component: {fileID: 1116942414}
-  m_Layer: 0
+  - component: {fileID: 1116942419}
+  m_Layer: 12
   m_Name: Cube (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1018,8 +1187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &1116942415
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1035,7 +1204,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1112,6 +1281,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1116942419
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116942413}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1126128692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,7 +1321,8 @@ GameObject:
   - component: {fileID: 1126128695}
   - component: {fileID: 1126128694}
   - component: {fileID: 1126128693}
-  m_Layer: 0
+  - component: {fileID: 1126128698}
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,8 +1341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &1126128694
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1161,7 +1358,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1238,6 +1435,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1126128698
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126128692}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1255128851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,7 +1475,8 @@ GameObject:
   - component: {fileID: 1255128854}
   - component: {fileID: 1255128853}
   - component: {fileID: 1255128852}
-  m_Layer: 0
+  - component: {fileID: 1255128857}
+  m_Layer: 12
   m_Name: Cube (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1270,8 +1495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &1255128853
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1287,7 +1512,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1364,6 +1589,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1255128857
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255128851}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1280997780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,7 +1629,8 @@ GameObject:
   - component: {fileID: 1280997783}
   - component: {fileID: 1280997782}
   - component: {fileID: 1280997781}
-  m_Layer: 0
+  - component: {fileID: 1280997786}
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1396,8 +1649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &1280997782
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1413,7 +1666,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1490,6 +1743,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1280997786
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280997780}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1315920051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,7 +1783,8 @@ GameObject:
   - component: {fileID: 1315920054}
   - component: {fileID: 1315920053}
   - component: {fileID: 1315920052}
-  m_Layer: 0
+  - component: {fileID: 1315920057}
+  m_Layer: 12
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1522,8 +1803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
+  amount: 1
 --- !u!65 &1315920053
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1539,7 +1820,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1616,6 +1897,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1315920057
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315920051}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1575207789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,7 +1937,8 @@ GameObject:
   - component: {fileID: 1575207792}
   - component: {fileID: 1575207791}
   - component: {fileID: 1575207790}
-  m_Layer: 0
+  - component: {fileID: 1575207795}
+  m_Layer: 12
   m_Name: Cube (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1648,8 +1957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &1575207791
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1665,7 +1974,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1742,6 +2051,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1575207795
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575207789}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1930806185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,7 +2091,8 @@ GameObject:
   - component: {fileID: 1930806188}
   - component: {fileID: 1930806187}
   - component: {fileID: 1930806186}
-  m_Layer: 0
+  - component: {fileID: 1930806191}
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1774,8 +2111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &1930806187
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1791,7 +2128,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1868,6 +2205,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1930806191
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930806185}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1964403326
 GameObject:
   m_ObjectHideFlags: 0
@@ -2008,7 +2372,8 @@ GameObject:
   - component: {fileID: 1972584142}
   - component: {fileID: 1972584141}
   - component: {fileID: 1972584140}
-  m_Layer: 0
+  - component: {fileID: 1972584145}
+  m_Layer: 12
   m_Name: Cube (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2027,8 +2392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc59b133eac2034da21c5755b87e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  itemData: {fileID: 11400000, guid: fe19d5bde24ea27488381cf483f47ddf, type: 2}
-  quantity: 1
+  item: {fileID: 11400000, guid: ab63bb15ef0abf444b7fa9416f75491f, type: 2}
+  amount: 1
 --- !u!65 &1972584141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2044,7 +2409,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2121,6 +2486,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1972584145
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972584139}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &7183242471731664798
 PrefabInstance:
   m_ObjectHideFlags: 0

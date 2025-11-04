@@ -136,8 +136,22 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            // Deseleccionar todo al cerrar
+            // Deseleccionar el objeto actual del EventSystem
             EventSystem.current.SetSelectedGameObject(null);
+
+            // ?? Forzar el estado visual de todos los slots a "no seleccionado"
+            if (slot != null && slot.Length > 0)
+            {
+                foreach (var s in slot)
+                {
+                    if (s == null) continue;
+                    var selector = s.GetComponent<SlotSelector>();
+                    if (selector != null)
+                        selector.ForceDeselect();
+                }
+            }
+
+            Debug.Log("[Inventory] Todos los slots deseleccionados visualmente.");
         }
 
         Debug.Log($"[Inventory] Inventario {(inventoryEnabled ? "abierto" : "cerrado")}");
