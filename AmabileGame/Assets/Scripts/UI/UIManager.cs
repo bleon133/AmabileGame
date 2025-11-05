@@ -15,42 +15,44 @@ public class UIManager : MonoBehaviour
     public Image item;
 
     [Header("Pause Menu")]
-    [SerializeField] private GameObject pauseModal;
-    [SerializeField] private Button resumeButton;
-    [SerializeField] private Button exitButton;
-    [SerializeField] private string exitSceneName = "MainMenu";
+    [SerializeField] private GameObject pauseModal;       // Panel/Canvas del modal
+    [SerializeField] private Button resumeButton;         // Botón Reanudar
+    [SerializeField] private Button exitButton;           // Botón Salir
+    [SerializeField] private string exitSceneName = "MainMenu"; // Cambia esto en el Inspector
 
     public bool IsPaused { get; private set; }
 
-    // ===== Overlays =====
+    // ======== NUEVO: Overlays (p.ej. panel pergamino) ========
     [Header("Overlays")]
     [Tooltip("Si hay un overlay abierto (p.ej. pergamino), bloquear el toggle de pausa (Escape/Start).")]
     [SerializeField] private bool blockPauseWhenOverlayOpen = true;
 
-    private int overlayHolds = 0;
+    private int overlayHolds = 0; // contador por si en el futuro hay más de un overlay
     public bool HasOverlayHold => overlayHolds > 0;
-
-    // ===== Game Over =====
-    [Header("Game Over")]
-    [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private Button goYesButton; // Reiniciar (SOFT clean)
-    [SerializeField] private Button goNoButton;  // Volver a menú (HARD clean)
-    [Tooltip("Escena a cargar cuando el usuario elige 'Sí' (reiniciar / reaparecer).")]
-    [SerializeField] private string respawnSceneName = "Level01";
-
-    private bool isGameOver = false;
 
     private void ApplyTimeAndCursor()
     {
-        bool shouldPause = IsPaused || HasOverlayHold || isGameOver;
+        // Pausado si el menú de pausa está activo o hay overlays activos
+        bool shouldPause = IsPaused || HasOverlayHold;
+
         Time.timeScale = shouldPause ? 0f : 1f;
         AudioListener.pause = shouldPause;
         Cursor.visible = shouldPause;
         Cursor.lockState = shouldPause ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
-    public void PushOverlayHold() { overlayHolds++; ApplyTimeAndCursor(); }
-    public void PopOverlayHold() { overlayHolds = Mathf.Max(0, overlayHolds - 1); ApplyTimeAndCursor(); }
+    public void PushOverlayHold()
+    {
+        overlayHolds++;
+        ApplyTimeAndCursor();
+    }
+
+    public void PopOverlayHold()
+    {
+        overlayHolds = Mathf.Max(0, overlayHolds - 1);
+        ApplyTimeAndCursor();
+    }
+    // =========================================================
 
     private void Awake()
     {
@@ -59,20 +61,19 @@ public class UIManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
         SetPaused(false);
         if (pauseModal != null) pauseModal.SetActive(false);
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
 
         if (resumeButton != null) resumeButton.onClick.AddListener(OnResumeClicked);
         if (exitButton != null) exitButton.onClick.AddListener(OnExitClicked);
-
-        if (goYesButton != null) goYesButton.onClick.AddListener(OnGameOverYes);
-        if (goNoButton != null) goNoButton.onClick.AddListener(OnGameOverNo);
     }
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -80,45 +81,46 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        // >>> Bloquear toggle de pausa si hay un overlay activo (ej. pergamino)
         if (blockPauseWhenOverlayOpen &&
-            (HasOverlayHold || isGameOver ||
-             (ScrollPanelController.Instance != null && ScrollPanelController.Instance.IsOpen)))
+            (HasOverlayHold || (ScrollPanelController.Instance != null && ScrollPanelController.Instance.IsOpen)))
         {
-            HandleSubmitIfAnyPanelOpen();
             return;
         }
 
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) TogglePause();
+        // --- Teclado: Escape para toggle ---
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+            TogglePause();
 
+        // >>> Mando: botón Menu (Start) para toggle
         var gamepad = Gamepad.current;
-        if (gamepad != null && gamepad.startButton.wasPressedThisFrame) TogglePause();
+        if (gamepad != null && gamepad.startButton.wasPressedThisFrame)
+            TogglePause();
 
-        HandleSubmitIfAnyPanelOpen();
+        // >>> Submit cuando el menú está abierto:
+        if (IsPaused && pauseModal != null && pauseModal.activeSelf)
+        {
+            bool submit =
+                (Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame))
+                || (gamepad != null && gamepad.buttonSouth.wasPressedThisFrame); // A en Xbox
+
+            if (submit) SubmitCurrentSelection(); // >>> disparar el botón seleccionado
+        }
     }
 
-    private void HandleSubmitIfAnyPanelOpen()
+    public void TogglePause()
     {
-        bool anyOpen = (pauseModal != null && pauseModal.activeSelf) ||
-                       (gameOverPanel != null && gameOverPanel.activeSelf);
-        if (!anyOpen) return;
-
-        var gamepad = Gamepad.current;
-        bool submit =
-            (Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame))
-            || (gamepad != null && gamepad.buttonSouth.wasPressedThisFrame);
-
-        if (submit) SubmitCurrentSelection();
+        if (IsPaused) ResumeGame();
+        else PauseGame();
     }
-
-    public void TogglePause() { if (IsPaused) ResumeGame(); else PauseGame(); }
 
     public void PauseGame()
     {
-        if (isGameOver) return;
         SetPaused(true);
         if (pauseModal != null)
         {
             pauseModal.SetActive(true);
+            // Selecciona por defecto el botón Reanudar para mando/teclado
             if (resumeButton != null && EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
         }
@@ -130,105 +132,31 @@ public class UIManager : MonoBehaviour
         SetPaused(false);
     }
 
-    // ——— Asegura que la animación de muerte corra (no pausa)
-    public void ForceUnpauseForDeath()
+    // ===== Salir y LIMPIAR todo DontDestroyOnLoad =====
+    public void ExitToSceneAndClearAllDontDestroy()
     {
         if (pauseModal != null) pauseModal.SetActive(false);
-        IsPaused = false;
-        ApplyTimeAndCursor();
+        SetPaused(false);
+        StartCoroutine(ExitAndCleanCoroutine());
     }
 
-    // ——— Mostrar Game Over y congelar
-    public void ShowGameOver()
+    private IEnumerator ExitAndCleanCoroutine()
     {
-        isGameOver = true;
-        if (pauseModal != null) pauseModal.SetActive(false);
+        // Creamos un limpiador que sobrevivirá al cambio de escena
+        var cleanerGO = new GameObject("[DDOL Cleaner]");
+        var cleaner = cleanerGO.AddComponent<DDOLCleaner>();
+        DontDestroyOnLoad(cleanerGO);
 
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-            if (goYesButton != null && EventSystem.current != null)
-                EventSystem.current.SetSelectedGameObject(goYesButton.gameObject);
-        }
-
-        ApplyTimeAndCursor();
-    }
-
-    // ===== Acciones Game Over =====
-    // Sí: SOFT clean (conservar DDOL) -> respawnSceneName
-    public void OnGameOverYes()
-    {
-        if (!string.IsNullOrEmpty(respawnSceneName))
-            LoadSceneAndSoftCleanDontDestroy(respawnSceneName);
-        else
-            Debug.LogWarning("[UIManager] respawnSceneName no está definido.");
-    }
-
-    // No: HARD clean (eliminar todo DDOL) -> menú
-    public void OnGameOverNo()
-    {
+        // Carga de la escena de salida (Single reemplaza la escena activa)
         if (!string.IsNullOrEmpty(exitSceneName))
-            LoadSceneAndHardClearDontDestroy(exitSceneName);
+            SceneManager.LoadScene(exitSceneName, LoadSceneMode.Single);
         else
             Debug.LogWarning("[UIManager] exitSceneName no está definido.");
+
+        yield return null; // dejamos que la carga procese al menos un frame
     }
 
-    // ===== Salir con limpieza SUAVE (sin borrar DDOL) =====
-    public void ExitToSceneAndSoftCleanDontDestroy()
-    {
-        if (pauseModal != null) pauseModal.SetActive(false);
-        SetPaused(false);
-        StartCoroutine(SoftCleanAndLoadCoroutine(exitSceneName));
-    }
-
-    public void LoadSceneAndSoftCleanDontDestroy(string sceneName)
-    {
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
-        isGameOver = false;
-
-        SetPaused(false);
-        StartCoroutine(SoftCleanAndLoadCoroutine(sceneName));
-    }
-
-    private IEnumerator SoftCleanAndLoadCoroutine(string targetScene)
-    {
-        var cleanerGO = new GameObject("[DDOL SoftCleaner]");
-        cleanerGO.AddComponent<DDOLSoftCleaner>(); // solo restablece estados; NO borra DDOL
-        DontDestroyOnLoad(cleanerGO);
-
-        if (!string.IsNullOrEmpty(targetScene))
-            SceneManager.LoadScene(targetScene, LoadSceneMode.Single);
-        else
-            Debug.LogWarning("[UIManager] targetScene no está definido.");
-
-        yield return null;
-    }
-
-    // ===== Carga con limpieza DURA (sí borra DDOL) =====
-    private void LoadSceneAndHardClearDontDestroy(string sceneName)
-    {
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
-        isGameOver = false;
-
-        SetPaused(false);
-        StartCoroutine(HardCleanAndLoadCoroutine(sceneName));
-    }
-
-    private IEnumerator HardCleanAndLoadCoroutine(string targetScene)
-    {
-        var cleanerGO = new GameObject("[DDOL HardCleaner]");
-        cleanerGO.AddComponent<DDOLHardCleaner>(); // eliminará todo DDOL tras cargar
-        DontDestroyOnLoad(cleanerGO);
-
-        if (!string.IsNullOrEmpty(targetScene))
-            SceneManager.LoadScene(targetScene, LoadSceneMode.Single);
-        else
-            Debug.LogWarning("[UIManager] targetScene no está definido.");
-
-        yield return null;
-    }
-
-    // Mantengo por compatibilidad (usa soft-clean)
+    // Mantengo el método anterior por si quieres usarlo sin limpiar DDOL
     public void ExitToScene()
     {
         if (pauseModal != null) pauseModal.SetActive(false);
@@ -239,31 +167,26 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("[UIManager] exitSceneName no está definido.");
     }
 
-    // Botones
+    // Callbacks de botones
     public void OnResumeClicked() => ResumeGame();
-    public void OnExitClicked() => ExitToSceneAndSoftCleanDontDestroy();
 
-    private void SetPaused(bool value) { IsPaused = value; ApplyTimeAndCursor(); }
+    // Ahora el botón Salir dispara la versión con limpieza total
+    public void OnExitClicked() => ExitToSceneAndClearAllDontDestroy();
+
+    private void SetPaused(bool value)
+    {
+        IsPaused = value;
+        ApplyTimeAndCursor(); // <<< ahora centralizado (respeta overlays)
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SoftResetUI(); // aseguramos estados base
-    }
-
-    // ——— Limpieza SUAVE de UI/flags al cambiar de escena
-    public void SoftResetUI()
-    {
         if (pauseModal != null) pauseModal.SetActive(false);
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
-
-        overlayHolds = 0;
-        isGameOver = false;
+        overlayHolds = 0;          // <<< aseguramos limpiar overlays al cambiar de escena
         SetPaused(false);
-
-        if (EventSystem.current != null)
-            EventSystem.current.SetSelectedGameObject(null);
     }
 
+    // >>> Nuevo: “Submit” al botón UI actualmente seleccionado
     private void SubmitCurrentSelection()
     {
         if (EventSystem.current == null) return;
@@ -271,12 +194,8 @@ public class UIManager : MonoBehaviour
         var go = EventSystem.current.currentSelectedGameObject;
         if (go == null)
         {
-            if (gameOverPanel != null && gameOverPanel.activeSelf && goYesButton != null)
-            {
-                EventSystem.current.SetSelectedGameObject(goYesButton.gameObject);
-                go = goYesButton.gameObject;
-            }
-            else if (resumeButton != null)
+            // si no hay seleccionado, forzamos al de Reanudar
+            if (resumeButton != null)
             {
                 EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
                 go = resumeButton.gameObject;
@@ -285,46 +204,22 @@ public class UIManager : MonoBehaviour
         }
 
         var btn = go.GetComponent<Button>();
-        if (btn != null) btn.onClick.Invoke();
-        else ExecuteEvents.Execute(go, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+        if (btn != null)
+        {
+            btn.onClick.Invoke(); // dispara el click del botón
+        }
+        else
+        {
+            // fallback genérico
+            ExecuteEvents.Execute(go, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+        }
     }
 }
 
-/* ------------------------------------------------------
-   Limpiador SUAVE para la escena DontDestroyOnLoad
-   (NO destruye objetos DDOL; solo restablece estados)
------------------------------------------------------- */
-public class DDOLSoftCleaner : MonoBehaviour
-{
-    private void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
-    private void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Restablecer estados globales
-        AudioListener.pause = false;
-        Time.timeScale = 1f;
-        Cursor.visible = true;   // ajusta según tu escena destino
-        Cursor.lockState = CursorLockMode.None;
-
-        // Limpiar UI/flags desde el UIManager persistente (si existe)
-        if (UIManager.Instance != null)
-            UIManager.Instance.SoftResetUI();
-
-        // Evitar referencias UI colgadas
-        if (EventSystem.current != null)
-            EventSystem.current.SetSelectedGameObject(null);
-
-        // Me destruyo a mí mismo; el resto de DDOL permanece intacto
-        Destroy(this.gameObject);
-    }
-}
-
-/* ------------------------------------------------------
-   Limpiador DURO para la escena DontDestroyOnLoad
-   (DESTRUYE todos los objetos DDOL, excepto el limpiador)
------------------------------------------------------- */
-public class DDOLHardCleaner : MonoBehaviour
+// ------------------------------------------------------
+// Limpiador temporal de la escena "DontDestroyOnLoad"
+// ------------------------------------------------------
+public class DDOLCleaner : MonoBehaviour
 {
     private void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
     private void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
@@ -335,25 +230,21 @@ public class DDOLHardCleaner : MonoBehaviour
         var marker = new GameObject("[DDOL Marker]");
         Object.DontDestroyOnLoad(marker);
         var ddolScene = marker.scene;
-        Object.Destroy(marker);
+        Destroy(marker);
 
         // Destruir todos los root de DDOL excepto este limpiador
         var roots = ddolScene.GetRootGameObjects();
         foreach (var go in roots)
         {
             if (go == this.gameObject) continue;
-            Object.Destroy(go);
+            Destroy(go);
         }
 
-        // Restablecer estados globales
+        // Asegurar estados restaurados
         AudioListener.pause = false;
         Time.timeScale = 1f;
-        Cursor.visible = true;
+        Cursor.visible = true;             // ajusta según tu escena destino
         Cursor.lockState = CursorLockMode.None;
-
-        // Limpiar selección del EventSystem (si quedó alguno)
-        if (EventSystem.current != null)
-            EventSystem.current.SetSelectedGameObject(null);
 
         // Finalmente me destruyo a mí mismo para dejar DDOL vacío
         Destroy(this.gameObject);
