@@ -7,7 +7,7 @@ public class Bootstrap : MonoBehaviour
 
     void Start()
     {
-        // Cargar Nivel1 junto a Core 
-        SceneManager.LoadScene(firstLevelName, LoadSceneMode.Additive); 
+        // Cargar Nivel1 junto a Core
+        SceneManager.LoadScene(firstLevelName, LoadSceneMode.Additive);
     }
 }
