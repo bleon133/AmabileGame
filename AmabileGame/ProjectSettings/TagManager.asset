@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Blacksmith
   - Pergamino
+  - PickUp
   layers:
   - Default
   - TransparentFX

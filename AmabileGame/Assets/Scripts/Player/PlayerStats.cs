@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerStats : LivingEntity
 {
@@ -12,24 +13,28 @@ public class PlayerStats : LivingEntity
     [SerializeField] private Image staminaBarFill;
 
     [Header("Regeneración de stamina")]
-    [SerializeField] private float regenRate = 15f;   // unidades por segundo
-    [SerializeField] private float regenDelay = 2f;   // segundos de espera
+    [SerializeField] private float regenRate = 15f;
+    [SerializeField] private float regenDelay = 2f;
     private float regenTimer = 0f;
 
+    [Header("Retraso al morir")]
+    [Tooltip("Tiempo en segundos antes de mostrar el menú de derrota")]
+    [SerializeField] private float deathEventDelay = 2f; // ?? puedes ajustarlo en el inspector
+
+    public static System.Action OnPlayerDeath;
+
+    private bool isTired;
     public float CurrentStamina => currentStamina;
+    public float CurrentHealth => GetCurrentHealth();
+    public float MaxHealth => GetMaxHealth();
+    public event System.Action OnFatigue;
 
     private void Start()
     {
         currentStamina = maxStamina;
-
         OnHealthChanged += UpdateHealthUI;
-
         UpdateUI();
     }
-
-    public event System.Action OnFatigue;
-
-    private bool isTired;
 
     private void Update()
     {
@@ -45,19 +50,15 @@ public class PlayerStats : LivingEntity
             isTired = false;
         }
 
-
         if (GetCurrentHealth() <= 0f) return;
 
-        // ---- Calcular límite dinámico de stamina ----
         float staminaCap = (GetCurrentHealth() < GetMaxHealth() * 0.5f)
-            ? maxStamina * 0.5f   // si la vida está bajo el 50%, la stamina queda capada al 50%
+            ? maxStamina * 0.5f
             : maxStamina;
 
-        // Forzar la stamina a no pasar del límite
         if (currentStamina > staminaCap)
             currentStamina = Mathf.MoveTowards(currentStamina, staminaCap, regenRate * Time.deltaTime);
 
-        // Regeneración progresiva (siempre hacia arriba, pero nunca más del cap)
         if (currentStamina < staminaCap)
         {
             regenTimer += Time.deltaTime;
@@ -74,17 +75,16 @@ public class PlayerStats : LivingEntity
     {
         if (GetCurrentHealth() <= 0f) return;
         currentStamina = Mathf.Max(0, currentStamina - amount);
-        regenTimer = 0f; // reiniciar delay
+        regenTimer = 0f;
         UpdateUI();
     }
 
-    public void SetUI(UnityEngine.UI.Image health, UnityEngine.UI.Image stamina)
+    public void SetUI(Image health, Image stamina)
     {
         healthBarFill = health;
         staminaBarFill = stamina;
         UpdateUI();
     }
-
 
     private void UpdateUI()
     {
@@ -101,31 +101,32 @@ public class PlayerStats : LivingEntity
     protected override void Die()
     {
         base.Die();
+        Debug.Log("[PlayerStats] El jugador ha muerto.");
 
-        // Ejemplo: desactivar control del jugador
+        // ?? Desactivar control del jugador
         var controller = GetComponent<PlayerMotor>();
         if (controller) controller.enabled = false;
 
-        // Ejemplo: animación de muerte
+        // ?? Activar animación si existe
         var anim = GetComponent<Animator>();
         if (anim) anim.SetTrigger("Die");
 
-        // Ejemplo: recargar escena después de 3 segundos
-        // StartCoroutine(ReloadScene(3f));
+        // ?? Lanzar evento después de un retraso
+        StartCoroutine(DelayedDeathEvent());
     }
 
-    public float CurrentHealth => GetCurrentHealth();
-    public float MaxHealth => GetMaxHealth();
+    private IEnumerator DelayedDeathEvent()
+    {
+        Debug.Log($"[PlayerStats] Esperando {deathEventDelay} segundos antes de lanzar evento de muerte...");
+        yield return new WaitForSeconds(deathEventDelay);
+
+        OnPlayerDeath?.Invoke();
+        Debug.Log("[PlayerStats] Evento OnPlayerDeath ejecutado.");
+    }
 
     [ContextMenu("Test Damage")]
-    public void TestDamage()
-    {
-        TakeDamage(20f);
-    }
+    public void TestDamage() => TakeDamage(50f);
 
     [ContextMenu("Test Heal")]
-    public void TestHeal()
-    {
-        Heal(15f);
-    }
+    public void TestHeal() => Heal(15f);
 }

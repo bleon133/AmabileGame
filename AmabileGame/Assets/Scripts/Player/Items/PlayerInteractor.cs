@@ -8,7 +8,10 @@ public class PlayerInteractor : MonoBehaviour
 {
     [Header("Configuración")]
     [SerializeField] private LayerMask interactableMask;
-    [SerializeField] private TMP_Text pickupPrompt;  // referencia dinámica
+    [SerializeField] private TMP_Text pickupPrompt;  // referencia dinámica (por Tag)
+
+    private float checkInterval = 0.1f;
+    private float nextCheckTime = 0f;
 
     private PlayerInput playerInput;
     private InputAction interactAction;
@@ -41,20 +44,28 @@ public class PlayerInteractor : MonoBehaviour
         TryFindPrompt();
     }
 
+    // ?? Nuevo método de búsqueda basado en Tag
     private void TryFindPrompt()
     {
         if (pickupPrompt != null) return;
 
-        TMP_Text foundPrompt = FindFirstObjectByType<TMP_Text>(FindObjectsInactive.Include);
-        if (foundPrompt != null && foundPrompt.name.Contains("Pickup", System.StringComparison.OrdinalIgnoreCase))
+        GameObject promptObj = GameObject.FindGameObjectWithTag("PickUp");
+        if (promptObj != null)
         {
-            pickupPrompt = foundPrompt;
-            pickupPrompt.gameObject.SetActive(false);
-            Debug.Log($"[PlayerInteractor] ? pickupPrompt enlazado automáticamente: {pickupPrompt.name}");
+            pickupPrompt = promptObj.GetComponent<TMP_Text>();
+            if (pickupPrompt != null)
+            {
+                pickupPrompt.gameObject.SetActive(false);
+                Debug.Log($"[PlayerInteractor] pickupPrompt enlazado automáticamente por Tag: {pickupPrompt.name}");
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerInteractor] El objeto con Tag 'PickUp' no tiene componente TMP_Text.");
+            }
         }
         else
         {
-            Debug.LogWarning("[PlayerInteractor] ?? No se encontró texto de 'PickupPrompt' en la escena.");
+            Debug.LogWarning("[PlayerInteractor] No se encontró ningún objeto con Tag 'PickUp'.");
         }
     }
 
@@ -63,35 +74,36 @@ public class PlayerInteractor : MonoBehaviour
         playerInput = GetComponentInParent<PlayerInput>();
         if (playerInput == null)
         {
-            Debug.LogError("[PlayerInteractor] ? No se encontró PlayerInput.");
+            Debug.LogError("[PlayerInteractor] No se encontró PlayerInput.");
             return;
         }
 
         interactAction = playerInput.actions["Interact"];
         if (interactAction == null)
         {
-            Debug.LogError("[PlayerInteractor] ? No se encontró acción 'Interact'.");
+            Debug.LogError("[PlayerInteractor] No se encontró acción 'Interact'.");
             return;
         }
 
         interactAction.performed += TryInteract;
-        Debug.Log("[PlayerInteractor] ? InteractAction enlazada correctamente.");
+        Debug.Log("[PlayerInteractor] InteractAction enlazada correctamente.");
     }
 
     private void Update()
     {
-        // Recalcular el objeto visible cada frame
-        Collider visibleTarget = GetVisibleObjectInFront();
-
-        // Si el target cambió o se destruyó, actualizamos el mensaje
-        if (visibleTarget != currentTarget)
+        if (Time.time >= nextCheckTime)
         {
-            currentTarget = visibleTarget;
-            UpdatePrompt();
+            nextCheckTime = Time.time + checkInterval;
+            Collider visibleTarget = GetVisibleObjectInFront();
+
+            if (visibleTarget != currentTarget)
+            {
+                currentTarget = visibleTarget;
+                UpdatePrompt();
+            }
         }
         else if (currentTarget == null && pickupPrompt != null && pickupPrompt.gameObject.activeSelf)
         {
-            // Seguridad adicional: si el target ya no existe, ocultar texto
             pickupPrompt.gameObject.SetActive(false);
         }
     }
@@ -116,18 +128,17 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (currentTarget == null)
         {
-            Debug.Log("[PlayerInteractor] ?? No hay objeto visible para interactuar.");
+            Debug.Log("[PlayerInteractor] No hay objeto visible para interactuar.");
             return;
         }
 
         var pickup = currentTarget.GetComponent<ItemPickup>();
         if (pickup != null)
         {
-            Debug.Log($"[PlayerInteractor] ? Interactuando con: {currentTarget.name}");
+            Debug.Log($"[PlayerInteractor] Interactuando con: {currentTarget.name}");
             pickup.TryPickup();
         }
 
-        // En todos los casos limpiamos target y mensaje
         currentTarget = null;
         UpdatePrompt();
     }
@@ -137,7 +148,6 @@ public class PlayerInteractor : MonoBehaviour
         Collider best = null;
         float minDist = float.MaxValue;
 
-        // Limpiamos entradas nulas (por objetos destruidos)
         for (int i = nearbyObjects.Count - 1; i >= 0; i--)
         {
             if (nearbyObjects[i] == null)
@@ -186,7 +196,7 @@ public class PlayerInteractor : MonoBehaviour
             if (!nearbyObjects.Contains(other))
             {
                 nearbyObjects.Add(other);
-                Debug.Log($"[PlayerInteractor] ? Detectado: {other.name}");
+                Debug.Log($"[PlayerInteractor] Detectado: {other.name}");
             }
         }
     }
@@ -196,10 +206,9 @@ public class PlayerInteractor : MonoBehaviour
         if (nearbyObjects.Contains(other))
         {
             nearbyObjects.Remove(other);
-            Debug.Log($"[PlayerInteractor] ? Salió de rango: {other.name}");
+            Debug.Log($"[PlayerInteractor] Salió de rango: {other.name}");
         }
 
-        // Si el objeto que se fue era el actual, limpiar
         if (other == currentTarget)
         {
             currentTarget = null;
