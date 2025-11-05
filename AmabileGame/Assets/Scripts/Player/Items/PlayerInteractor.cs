@@ -114,7 +114,7 @@ public class PlayerInteractor : MonoBehaviour
 
         if (currentTarget != null)
         {
-            pickupPrompt.text = "Recoger";
+            pickupPrompt.text = "(A) Recoger";
             pickupPrompt.gameObject.SetActive(true);
         }
         else

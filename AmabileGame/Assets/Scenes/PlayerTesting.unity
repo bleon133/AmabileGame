@@ -374,6 +374,18 @@ PrefabInstance:
       value: Palo
       objectReference: {fileID: 0}
     - target: {fileID: 6622259368410364264, guid: 3be99d4cf009bad4887a70e2477d1c55, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622259368410364264, guid: 3be99d4cf009bad4887a70e2477d1c55, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622259368410364264, guid: 3be99d4cf009bad4887a70e2477d1c55, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622259368410364264, guid: 3be99d4cf009bad4887a70e2477d1c55, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.992
       objectReference: {fileID: 0}
