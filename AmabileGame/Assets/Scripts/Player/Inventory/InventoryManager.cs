@@ -44,4 +44,17 @@ public class InventoryManager : MonoBehaviour
         Debug.LogWarning("[InventoryManager] No hay espacio en el inventario.");
         return false;
     }
+    public void EquipItemFromSlot(InventorySlot slot)
+    {
+        Debug.Log($"Equipado: {slot.Item.name}");
+        // Aquí irá la lógica para equipar armas o ítems
+    }
+
+    public void DropItemFromSlot(InventorySlot slot)
+    {
+        Debug.Log($"Soltado: {slot.Item.name}");
+        slot.Clear();
+        // Aquí puedes instanciar el objeto en el mundo si quieres
+    }
+
 }

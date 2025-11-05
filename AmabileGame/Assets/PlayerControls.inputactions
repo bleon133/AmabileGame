@@ -232,9 +232,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Cancel",
+                    "name": "Drop",
                     "type": "Button",
-                    "id": "49cbdfef-ddc5-4afc-a729-8e9f6a9eefaa",
+                    "id": "92b67280-71bb-4347-a990-c1026f74ebc1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -359,23 +359,23 @@
                 },
                 {
                     "name": "",
-                    "id": "564e81a1-be99-4ff0-a21b-227bd454b2ab",
+                    "id": "04d67cac-4af1-4655-b842-26cf2473477b",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Cancel",
+                    "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c4f38abb-8198-4868-9816-cf3f90539cf0",
+                    "id": "ea45694d-377a-4f6d-885d-671545b7acc2",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Cancel",
+                    "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
