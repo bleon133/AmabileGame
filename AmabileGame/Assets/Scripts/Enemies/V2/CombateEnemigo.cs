@@ -2,9 +2,9 @@ using UnityEngine;
 
 /// <summary>
 /// Maneja el ataque cuerpo a cuerpo del enemigo:
-/// - Eval˙a si est· a rango/·ngulo para atacar.
-/// - Dispara la animaciÛn (Trigger 'Atacar').
-/// - Aplica daÒo en el momento del impacto vÌa Animation Event.
+/// - Eval√∫a si est√° a rango/√°ngulo para atacar.
+/// - Dispara la animaci√≥n (Trigger 'Atacar').
+/// - Aplica da√±o en el momento del impacto v√≠a Animation Event.
 /// </summary>
 [RequireComponent(typeof(MovimientoEnemigo))]
 public class CombateEnemigo : MonoBehaviour
@@ -16,10 +16,10 @@ public class CombateEnemigo : MonoBehaviour
     [SerializeField] private SensorVisionEnemigo vision;
 
     [Header("Origen del golpe")]
-    [SerializeField, Tooltip("Punto desde donde se eval˙a el golpe (mano, pecho). Si es null, usa este transform.")]
+    [SerializeField, Tooltip("Punto desde donde se eval√∫a el golpe (mano, pecho). Si es null, usa este transform.")]
     private Transform puntoGolpe;
 
-    [Header("DepuraciÛn")]
+    [Header("Depuraci√≥n")]
     [SerializeField] private bool dibujarGizmos = true;
 
     // Estado interno
@@ -64,7 +64,7 @@ public class CombateEnemigo : MonoBehaviour
 
     /// <summary>
     /// Llamado desde la IA (p.ej., estado CHASE) para intentar atacar.
-    /// Devuelve true si se disparÛ un ataque (para que la IA sepa no seguir moviÈndose ese frame).
+    /// Devuelve true si se dispar√≥ un ataque (para que la IA sepa no seguir movi√©ndose ese frame).
     /// </summary>
     public bool EvaluarYAtacar(Transform objetivo)
     {
@@ -87,14 +87,14 @@ public class CombateEnemigo : MonoBehaviour
         atacando = true;
         golpeAplicadoEnEsteCiclo = false;
 
-        // Detener el agente y tomar control de la rotaciÛn
+        // Detener el agente y tomar control de la rotaci√≥n
         mover.Detener();
         mover.SetUpdateRotation(false);
 
         // Orientar hacia el objetivo (suavizado corto en Update opcional)
         transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
 
-        // Disparar animaciÛn
+        // Disparar animaci√≥n
         anim.DispararAtaque();
 
         return true;
@@ -102,7 +102,7 @@ public class CombateEnemigo : MonoBehaviour
 
 
 
-    // ====== Animation Events (ll·malos desde el clip de Ataque) ======
+    // ====== Animation Events (ll√°malos desde el clip de Ataque) ======
 
     /// <summary>
     /// (Opcional) Evento al iniciar el clip para resetear bandera de golpe.
@@ -127,7 +127,7 @@ public class CombateEnemigo : MonoBehaviour
 
         Vector3 origen = OrigenGolpe.position;
 
-        // 1) Con m·scara + triggers (hurtbox)
+        // 1) Con m√°scara + triggers (hurtbox)
         Collider[] masked = Physics.OverlapSphere(
             origen,
             config.radioGolpe,
@@ -138,7 +138,7 @@ public class CombateEnemigo : MonoBehaviour
         int countMasked = 0;
         foreach (var c in masked)
         {
-            Debug.Log($"[Golpe/MASKED] tocÛ: {c.name} (layer {LayerMask.LayerToName(c.gameObject.layer)})");
+            Debug.Log($"[Golpe/MASKED] toc√≥: {c.name} (layer {LayerMask.LayerToName(c.gameObject.layer)})");
             var d = c.GetComponentInParent<IDamageable>();
             if (d != null && d.IsAlive)
             {
@@ -147,10 +147,10 @@ public class CombateEnemigo : MonoBehaviour
             }
         }
 
-        // 2) Debug: sin m·scara (øhay algo cerca?)
+        // 2) Debug: sin m√°scara (¬øhay algo cerca?)
         Collider[] all = Physics.OverlapSphere(origen, config.radioGolpe, ~0, QueryTriggerInteraction.Collide);
 
-        // 3) Fallback: detectar c·psula del CharacterController del objetivo (por si no hay hurtbox)
+        // 3) Fallback: detectar c√°psula del CharacterController del objetivo (por si no hay hurtbox)
         if (countMasked == 0 && objetivoActual != null)
         {
             var cc = objetivoActual.GetComponentInParent<CharacterController>();
@@ -210,7 +210,7 @@ public class CombateEnemigo : MonoBehaviour
     {
         if (!dibujarGizmos || config == null) return;
 
-        // Distancia/·ngulo de ataque
+        // Distancia/√°ngulo de ataque
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, config.distanciaAtaque);
 
