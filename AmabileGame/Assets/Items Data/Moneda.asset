@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Moneda
   icon: {fileID: 21300000, guid: d6032d13c4ee8c441b8173423b65deb2, type: 3}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 5106378964337509292, guid: de5dac543bad58a40804c9c3e29c2a73, type: 3}
   stackable: 0
   maxStack: 1

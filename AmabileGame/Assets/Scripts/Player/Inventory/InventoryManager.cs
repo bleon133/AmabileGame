@@ -1,24 +1,39 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class InventoryManager : MonoBehaviour
 {
+    [Header("Referencias")]
     [SerializeField] private Transform slotHolder; // padre de los slots
+    [SerializeField] private Transform dropOrigin;
+    [SerializeField] private EquipSlot equipSlot;
+
+    [Header("Configuración de Drop")]
+    [SerializeField] private float dropDistance = 2f;   // distancia frente al jugador
+    [SerializeField] private float dropHeightOffset = 0.5f; // ligera elevación
+    [SerializeField] private float dropForwardAngle = 15f; // inclinación al soltar
+
     private InventorySlot[] slots;
 
     void Awake()
     {
+        if (slotHolder == null)
+        {
+            Debug.LogError("[InventoryManager] ? Falta asignar SlotHolder.");
+            return;
+        }
+
         int n = slotHolder.childCount;
         slots = new InventorySlot[n];
         for (int i = 0; i < n; i++)
             slots[i] = slotHolder.GetChild(i).GetComponent<InventorySlot>();
     }
 
-    // Devuelve true si pudo agregar; false si no había espacio.
+    // ==================================================================
+    // ?? AGREGAR ITEM
+    // ==================================================================
     public bool AddItem(ItemData item, int qty = 1)
     {
-        // 1) Si es apilable, intenta apilar primero
         if (item.stackable)
         {
             foreach (var s in slots)
@@ -31,7 +46,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // 2) Buscar un slot vacío
         foreach (var s in slots)
         {
             if (!s.HasItem)
@@ -41,20 +55,88 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        Debug.LogWarning("[InventoryManager] No hay espacio en el inventario.");
+        Debug.LogWarning("[InventoryManager] ? No hay espacio en el inventario.");
         return false;
     }
+
+    // ==================================================================
+    // ? EQUIPAR ITEM
+    // ==================================================================
     public void EquipItemFromSlot(InventorySlot slot)
     {
-        Debug.Log($"Equipado: {slot.Item.name}");
-        // Aquí irá la lógica para equipar armas o ítems
+        if (!slot.HasItem) return;
+
+        ItemData item = slot.Item;
+
+        // Si ya hay algo equipado, primero lo devolvemos al inventario
+        if (equipSlot != null && equipSlot.EquippedItem != null)
+        {
+            Debug.Log($"[InventoryManager] ? Desequipando {equipSlot.EquippedItem.itemName}");
+            AddItem(equipSlot.EquippedItem, 1);
+        }
+
+        // Colocar el nuevo ítem en el slot de equipamiento
+        if (equipSlot != null)
+        {
+            equipSlot.SetItem(item);
+            Debug.Log($"[InventoryManager] ? Equipado: {item.itemName}");
+        }
+
+        // Eliminarlo del inventario (restar 1 unidad o limpiarlo)
+        slot.RemoveQuantity(1);
     }
 
+    // ==================================================================
+    // ?? SOLTAR ITEM
+    // ==================================================================
     public void DropItemFromSlot(InventorySlot slot)
     {
-        Debug.Log($"Soltado: {slot.Item.name}");
-        slot.Clear();
-        // Aquí puedes instanciar el objeto en el mundo si quieres
-    }
+        if (!slot.HasItem) return;
 
+        ItemData item = slot.Item;
+        slot.RemoveQuantity(1);
+
+        // Si el objeto tiene prefab, lo instanciamos
+        if (item.worldPrefab != null)
+        {
+            // Si no hay referencia de dropOrigin, la buscamos dinámicamente
+            if (dropOrigin == null)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if (player != null)
+                    dropOrigin = player.transform;
+            }
+
+            if (dropOrigin != null)
+            {
+                // Calcular posición frente al jugador
+                Vector3 dropPos = dropOrigin.position + (dropOrigin.forward * dropDistance);
+                dropPos.y += dropHeightOffset;
+
+                // Calcular rotación
+                Quaternion dropRot = Quaternion.Euler(dropOrigin.eulerAngles + new Vector3(dropForwardAngle, 0f, 0f));
+
+                // Instanciar el objeto físico
+                GameObject dropped = Instantiate(item.worldPrefab, dropPos, dropRot);
+                dropped.name = $"{item.name}_Dropped";
+
+                // Aplicar un pequeño impulso físico si tiene Rigidbody
+                Rigidbody rb = dropped.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.AddForce(dropOrigin.forward * 2f, ForceMode.Impulse);
+                }
+
+                Debug.Log($"[InventoryManager] ?? Soltado '{item.name}' frente al jugador.");
+            }
+            else
+            {
+                Debug.LogWarning("[InventoryManager] ? No se encontró dropOrigin (jugador o cámara).");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[InventoryManager] ? El item '{item.name}' no tiene un prefab asignado.");
+        }
+    }
 }
