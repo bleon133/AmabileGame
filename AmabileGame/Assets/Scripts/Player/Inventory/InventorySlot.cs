@@ -104,8 +104,8 @@ public class InventorySlot : MonoBehaviour, ISelectHandler, IDeselectHandler, IS
     {
         if (!HasItem || inventoryManager == null) return;
 
-        inventoryManager.EquipItemFromSlot(this);
         Debug.Log($"[InventorySlot:{name}] ? Equipando {Item.name}");
+        inventoryManager.EquipItemFromSlot(this);
     }
 
     private void OnDropPerformed(InputAction.CallbackContext ctx)
