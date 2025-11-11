@@ -294,7 +294,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3341442056468636279}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 4265c376e1cecb8418bbe4fa2ce68101, type: 3}
+  m_Avatar: {fileID: 9000000, guid: d9fa7627b545829459626c5fa5b0f949, type: 3}
   m_Controller: {fileID: 9100000, guid: 113fe8e464a30d446898df6cafc59507, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -302,17 +302,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-    'mixamorig:LeftHandIndex1'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
-    'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tTransform
-    'mixamorig:RightHandIndex3'\n\tTransform 'mixamorig:RightFoot'\n\tand more ...\n\tFrom
-    animation clip 'Idle'\n\tFrom animation clip 'Walk'\n\tFrom animation clip 'Run'\n\tFrom
-    animation clip 'Crouch Idle'\n\tFrom animation clip 'Crouch Walk'\n\tFrom animation
-    clip 'Injured Idle'\n\tFrom animation clip 'Injured Run'\n\tFrom animation clip
-    'Injured Walk'\n\tFrom animation clip 'CrouchedStand'\n\tFrom animation clip
-    'StandingCrouch'\n\tand more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -935,22 +925,16 @@ PrefabInstance:
       value: 0.0036668065
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 4265c376e1cecb8418bbe4fa2ce68101, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: d9fa7627b545829459626c5fa5b0f949, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 4265c376e1cecb8418bbe4fa2ce68101, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 113fe8e464a30d446898df6cafc59507, type: 2}
     - target: {fileID: 5866666021909216657, guid: 4265c376e1cecb8418bbe4fa2ce68101, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-        'mixamorig:LeftHandIndex1'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
-        'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tTransform
-        'mixamorig:RightHandIndex3'\n\tTransform 'mixamorig:RightFoot'\n\tand more
-        ...\n\tFrom animation clip 'Idle'\n\tFrom animation clip 'Walk'\n\tFrom animation
-        clip 'Run'\n\tFrom animation clip 'Crouch Idle'\n\tFrom animation clip 'Crouch
-        Walk'\n\tFrom animation clip 'Injured Idle'\n\tFrom animation clip 'Injured
-        Run'\n\tFrom animation clip 'Injured Walk'\n\tFrom animation clip 'CrouchedStand'\n\tFrom
-        animation clip 'StandingCrouch'\n\tand more ..."
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6000407479487422213, guid: 4265c376e1cecb8418bbe4fa2ce68101, type: 3}
       propertyPath: m_LocalPosition.x
