@@ -5303,7 +5303,7 @@ MonoBehaviour:
       Height: 1.2
     Bottom:
       Radius: 2.5
-      Height: 0.3
+      Height: -1.5
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:

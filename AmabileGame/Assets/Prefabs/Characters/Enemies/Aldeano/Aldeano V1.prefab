@@ -394,7 +394,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   triggers: 2
-  logDetalles: 1
+  logDetalles: 0
 --- !u!114 &2497968178165175867
 MonoBehaviour:
   m_ObjectHideFlags: 0

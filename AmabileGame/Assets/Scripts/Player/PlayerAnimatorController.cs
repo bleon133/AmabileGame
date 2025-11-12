@@ -8,20 +8,18 @@ public class PlayerAnimatorController : MonoBehaviour
     [SerializeField] private PlayerStats stats;
     private Animator animator;
 
-    // Flags internos de validación
     private bool hasTakeDamage;
     private bool hasDie;
     private bool hasUseItem;
+    private bool hasAttack;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
-        // Auto-asignar referencias
         if (!motor) motor = GetComponent<PlayerMotor>();
         if (!stats) stats = GetComponent<PlayerStats>();
 
-        // Validar parámetros del Animator (una sola vez)
         if (animator && animator.runtimeAnimatorController != null)
         {
             foreach (var param in animator.parameters)
@@ -32,6 +30,8 @@ public class PlayerAnimatorController : MonoBehaviour
                     hasDie = true;
                 else if (param.name == "UseItem" && param.type == AnimatorControllerParameterType.Trigger)
                     hasUseItem = true;
+                else if (param.name == "Attack" && param.type == AnimatorControllerParameterType.Trigger)
+                    hasAttack = true;
             }
         }
     }
@@ -70,7 +70,23 @@ public class PlayerAnimatorController : MonoBehaviour
     }
 
     // ============================================================
-    // EVENTOS DE DAÑO Y MUERTE
+    // ?? NUEVO: ANIMACIÓN DE ATAQUE
+    // ============================================================
+    public void PlayAttack()
+    {
+        if (animator != null && hasAttack)
+        {
+            animator.SetTrigger("Attack");
+            Debug.Log("[PlayerAnimatorController] ?? Animación de ataque ejecutada.");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerAnimatorController] No se encontró parámetro 'Attack' en el Animator.");
+        }
+    }
+
+    // ============================================================
+    // ?? EVENTOS DE DAÑO Y MUERTE
     // ============================================================
     private void HandleDamage()
     {
@@ -85,7 +101,7 @@ public class PlayerAnimatorController : MonoBehaviour
     }
 
     // ============================================================
-    // NUEVO: ANIMACIÓN DE USO DE CONSUMIBLE
+    // ?? ANIMACIÓN DE CONSUMIBLE
     // ============================================================
     public void PlayUseItem()
     {
