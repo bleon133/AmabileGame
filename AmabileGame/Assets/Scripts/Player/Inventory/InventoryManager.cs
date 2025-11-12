@@ -208,4 +208,13 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
+
+    public EquipSlot EquipSlotRef => equipSlot;
+
+    // --- NUEVO: helper para limpiar el slot equipado ---
+    public void ClearEquipped()
+    {
+        if (equipSlot != null)
+            equipSlot.ClearSlot();
+    }
 }
