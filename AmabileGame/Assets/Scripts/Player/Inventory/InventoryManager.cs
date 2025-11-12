@@ -19,7 +19,15 @@ public class InventoryManager : MonoBehaviour
     private ItemData currentConsumable;
     private InventorySlot sourceSlot;
 
-    void Awake()
+    // ? NUEVO EVENTO: se dispara cuando el jugador equipa algo nuevo
+    public event System.Action<ItemData> OnEquippedItemChanged;
+
+    // ? Getter rápido para obtener el ítem actualmente equipado
+    public ItemData EquippedItem => equipSlot != null ? equipSlot.EquippedItem : null;
+
+    public EquipSlot EquipSlotRef => equipSlot;
+
+    private void Awake()
     {
         if (slotHolder == null)
         {
@@ -84,12 +92,11 @@ public class InventoryManager : MonoBehaviour
         {
             equipSlot.SetItem(item);
             Debug.Log($"[InventoryManager] ? Equipado: {item.itemName}");
+            OnEquippedItemChanged?.Invoke(item); // ?? Dispara evento global
         }
 
         slot.RemoveQuantity(1);
     }
-
-
 
     // =============================================================
     // ??? SOLTAR ITEM
@@ -103,11 +110,11 @@ public class InventoryManager : MonoBehaviour
 
         if (item.worldPrefab == null)
         {
-            Debug.LogWarning($"[InventoryManager] ? El item '{item.name}' no tiene prefab asignado.");
+            Debug.LogWarning($"[InventoryManager] ?? El item '{item.name}' no tiene prefab asignado.");
             return;
         }
 
-        // Buscar origen
+        // Buscar origen del drop
         if (dropOrigin == null)
         {
             var player = GameObject.FindGameObjectWithTag("Player");
@@ -117,7 +124,7 @@ public class InventoryManager : MonoBehaviour
 
         if (dropOrigin == null)
         {
-            Debug.LogWarning("[InventoryManager] ? No se encontró el origen de drop (jugador o cámara).");
+            Debug.LogWarning("[InventoryManager] ?? No se encontró el origen del drop (jugador o cámara).");
             return;
         }
 
@@ -138,13 +145,14 @@ public class InventoryManager : MonoBehaviour
             Debug.Log($"[InventoryManager] ?? Soltado {instance.baseData.itemName} con durabilidad {instance.currentDurability}/{instance.baseData.maxDurability}");
         }
 
+        // Aplicar impulso
         Rigidbody rb = dropped.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(dropOrigin.forward * 2f, ForceMode.Impulse);
     }
 
     // =============================================================
-    // ?? USAR CONSUMIBLE (botón de acción)
+    // ?? USAR CONSUMIBLE
     // =============================================================
     public void UseConsumable()
     {
@@ -171,17 +179,17 @@ public class InventoryManager : MonoBehaviour
 
         if (currentConsumable == null)
         {
-            Debug.Log("[InventoryManager] No hay consumibles disponibles.");
+            Debug.Log("[InventoryManager] ? No hay consumibles disponibles.");
             return;
         }
 
-        // Bloquear movimiento
+        // Bloquear movimiento mientras usa consumible
         if (playerMotor) playerMotor.enabled = false;
 
-        // Animar acción
+        // Ejecutar animación
         if (playerAnimator) playerAnimator.PlayUseItem();
 
-        Debug.Log($"[InventoryManager] Usando consumible: {currentConsumable.itemName}");
+        Debug.Log($"[InventoryManager] ?? Usando consumible: {currentConsumable.itemName}");
     }
 
     // =============================================================
@@ -209,12 +217,15 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
-    public EquipSlot EquipSlotRef => equipSlot;
-
-    // --- NUEVO: helper para limpiar el slot equipado ---
+    // =============================================================
+    // ?? DESEQUIPAR
+    // =============================================================
     public void ClearEquipped()
     {
         if (equipSlot != null)
+        {
             equipSlot.ClearSlot();
+            OnEquippedItemChanged?.Invoke(null); // ?? Notificar que ya no hay nada equipado
+        }
     }
 }
