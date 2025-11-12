@@ -14050,6 +14050,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1622695578}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "Por decreto del rey todos los granjeros est\xE1n ordenados de incrementar
         producci\xF3n de granos, la p\xE9rdida de personal no es excusa para detener
@@ -16909,6 +16913,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1622695578}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-0
+      objectReference: {fileID: 0}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "Intrucciones para el mando: \n\nA = Recoger / Interactuar\n\nB = Agacharse\n\nRT
@@ -23369,6 +23377,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1622695578}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "Para mi familia, si es que pueden leer esto, no era mi intenci\xF3n
         que esto llegara a este punto, nunca pens\xE9 que las consecuencias ser\xEDan
@@ -23725,6 +23737,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1622695578}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-2
+      objectReference: {fileID: 0}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "La ciudad se est\xE1 volviendo loca y nadie nos quiere decir que est\xE1
@@ -35139,6 +35155,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1622695578}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "Aviso a todos los guardias a cargo de mantener el orden en el mercado.\r\n\r\nLa
         entrada queda restringida \xFAnicamente a personal de la guardia y trabajadores
@@ -41217,6 +41237,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1622695578}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-4
+      objectReference: {fileID: 0}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "\xBFQui\xE9n es el encargado de traer las partes de reemplazo de la
@@ -50775,6 +50799,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1622695578}
+    - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
+      propertyPath: cartaId
+      value: perg-3
+      objectReference: {fileID: 0}
     - target: {fileID: 1911580783062292065, guid: 7241422f7f2f31f4b81b43b01b03e03d, type: 3}
       propertyPath: textoPergamino
       value: "Se llevaron a Robert durante la noche, yo mismo lo vi entre mis ventanas,

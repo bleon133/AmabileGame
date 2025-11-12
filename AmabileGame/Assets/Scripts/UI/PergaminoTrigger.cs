@@ -63,6 +63,10 @@ public class PergaminoProximity : MonoBehaviour
     [SerializeField] private Color gizmoColorInside = new Color(0f, 1f, 0f, 0.15f);
     [SerializeField] private Color gizmoColorBorder = new Color(0f, 1f, 0f, 0.8f);
 
+
+    [Header("Contenido")]
+    [SerializeField] private string cartaId;
+
     private bool _playerInside = false;
     private float _enterRadius; // radio efectivo para entrar
     private float _exitRadius;  // radio efectivo para salir (mayor para histeresis)
@@ -134,8 +138,14 @@ public class PergaminoProximity : MonoBehaviour
         {
             if (ScrollPanelController.Instance != null)
             {
-                ScrollPanelController.Instance.Show(textoPergamino);
-                PlaySfx(openSfx);
+                if (ScrollPanelController.Instance.ShowCard(cartaId))
+                {
+                    PlaySfx(openSfx);
+                }
+                else
+                {
+                    Debug.LogWarning($"[PergaminoProximity] No se pudo abrir carta con ID '{cartaId}'.");
+                }
             }
             else
             {
