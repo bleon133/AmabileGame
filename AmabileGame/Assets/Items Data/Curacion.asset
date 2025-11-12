@@ -22,8 +22,8 @@ MonoBehaviour:
   healAmount: 30
   staminaRestore: 0
   weaponDamage: 0
-  attackRange: 2
-  attackSpeed: 1
-  maxDurability: 100
+  attackRange: 0
+  attackSpeed: 0
+  maxDurability: 0
   wearChance: 0.3
   armorValue: 0

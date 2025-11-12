@@ -6,6 +6,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Transform slotHolder;
     [SerializeField] private Transform dropOrigin;
     [SerializeField] private EquipSlot equipSlot;
+    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerAnimatorController playerAnimator;
+    [SerializeField] private PlayerMotor playerMotor;
 
     [Header("Configuración de Drop")]
     [SerializeField] private float dropDistance = 2f;
@@ -13,6 +16,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private float dropForwardAngle = 15f;
 
     private InventorySlot[] slots;
+    private ItemData currentConsumable;
+    private InventorySlot sourceSlot;
 
     void Awake()
     {
@@ -84,6 +89,8 @@ public class InventoryManager : MonoBehaviour
         slot.RemoveQuantity(1);
     }
 
+
+
     // =============================================================
     // ??? SOLTAR ITEM
     // =============================================================
@@ -134,5 +141,71 @@ public class InventoryManager : MonoBehaviour
         Rigidbody rb = dropped.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(dropOrigin.forward * 2f, ForceMode.Impulse);
+    }
+
+    // =============================================================
+    // ?? USAR CONSUMIBLE (botón de acción)
+    // =============================================================
+    public void UseConsumable()
+    {
+        currentConsumable = null;
+        sourceSlot = null;
+
+        // Si el ítem equipado es un consumible
+        if (equipSlot != null && equipSlot.EquippedItem != null && equipSlot.EquippedItem.IsConsumable)
+        {
+            currentConsumable = equipSlot.EquippedItem;
+        }
+        else
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.HasItem && slot.Item.IsConsumable)
+                {
+                    currentConsumable = slot.Item;
+                    sourceSlot = slot;
+                    break;
+                }
+            }
+        }
+
+        if (currentConsumable == null)
+        {
+            Debug.Log("[InventoryManager] No hay consumibles disponibles.");
+            return;
+        }
+
+        // Bloquear movimiento
+        if (playerMotor) playerMotor.enabled = false;
+
+        // Animar acción
+        if (playerAnimator) playerAnimator.PlayUseItem();
+
+        Debug.Log($"[InventoryManager] Usando consumible: {currentConsumable.itemName}");
+    }
+
+    // =============================================================
+    // ?? ANIMATION EVENTS
+    // =============================================================
+    public ItemData GetFirstConsumable()
+    {
+        foreach (var slot in slots)
+            if (slot.HasItem && slot.Item.IsConsumable)
+                return slot.Item;
+        return null;
+    }
+
+    public ItemData ConsumeFirstConsumable()
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.HasItem && slot.Item.IsConsumable)
+            {
+                var item = slot.Item;
+                slot.RemoveQuantity(1);
+                return item;
+            }
+        }
+        return null;
     }
 }

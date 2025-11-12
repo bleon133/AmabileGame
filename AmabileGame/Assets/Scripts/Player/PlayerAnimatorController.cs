@@ -11,6 +11,7 @@ public class PlayerAnimatorController : MonoBehaviour
     // Flags internos de validación
     private bool hasTakeDamage;
     private bool hasDie;
+    private bool hasUseItem;
 
     private void Awake()
     {
@@ -29,6 +30,8 @@ public class PlayerAnimatorController : MonoBehaviour
                     hasTakeDamage = true;
                 else if (param.name == "Die" && param.type == AnimatorControllerParameterType.Trigger)
                     hasDie = true;
+                else if (param.name == "UseItem" && param.type == AnimatorControllerParameterType.Trigger)
+                    hasUseItem = true;
             }
         }
     }
@@ -37,7 +40,6 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         if (stats != null)
         {
-            // Suscribirse a eventos del sistema de vida
             stats.OnDamaged += HandleDamage;
             stats.OnDied += HandleDeath;
         }
@@ -56,12 +58,10 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         if (!motor) return;
 
-        // ---- Parámetros de locomoción ----
         animator.SetFloat("Speed", motor.CurrentSpeed);
         animator.SetBool("IsRunning", motor.IsRunning);
         animator.SetBool("IsCrouching", motor.IsCrouching);
 
-        // ---- Estado herido (basado en salud actual) ----
         if (stats)
         {
             bool isInjured = stats.CurrentHealth < stats.MaxHealth * 0.5f;
@@ -72,7 +72,6 @@ public class PlayerAnimatorController : MonoBehaviour
     // ============================================================
     // EVENTOS DE DAÑO Y MUERTE
     // ============================================================
-
     private void HandleDamage()
     {
         if (animator != null && hasTakeDamage && stats.CurrentHealth > 0f)
@@ -83,5 +82,21 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         if (animator != null && hasDie)
             animator.SetTrigger("Die");
+    }
+
+    // ============================================================
+    // NUEVO: ANIMACIÓN DE USO DE CONSUMIBLE
+    // ============================================================
+    public void PlayUseItem()
+    {
+        if (animator != null && hasUseItem)
+        {
+            animator.SetTrigger("UseItem");
+            Debug.Log("[PlayerAnimatorController] Ejecutando animación de uso de consumible.");
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerAnimatorController] No se encontró parámetro 'UseItem' en el Animator.");
+        }
     }
 }

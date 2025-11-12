@@ -111,17 +111,19 @@ public class PlayerStats : LivingEntity
     }
 
     [ContextMenu("Consumir Stamina (Inspector)")]
-    private void ConsumeFromInspector()
-    {
-        UseStamina(staminaConsumption);
-    }
+    private void ConsumeFromInspector() => UseStamina(staminaConsumption);
 
     [ContextMenu("Restaurar Stamina Completa")]
     public void RestoreFullStamina()
     {
         currentStamina = maxStamina;
         UpdateUI();
-        Debug.Log("[PlayerStats] ?? Stamina restaurada completamente.");
+    }
+    public void RestoreStamina(float amount)
+    {
+        currentStamina = Mathf.Min(maxStamina, currentStamina + amount);
+        UpdateUI();
+        Debug.Log($"[PlayerStats] ?? Stamina restaurada +{amount}. Total: {currentStamina}/{maxStamina}");
     }
 
     // ======================================================
@@ -168,7 +170,6 @@ public class PlayerStats : LivingEntity
         Debug.Log($"[PlayerStats] Esperando {deathEventDelay} segundos antes de lanzar evento de muerte...");
         yield return new WaitForSeconds(deathEventDelay);
         OnPlayerDeath?.Invoke();
-        Debug.Log("[PlayerStats] Evento OnPlayerDeath ejecutado.");
     }
 
     // ======================================================
