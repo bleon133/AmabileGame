@@ -72,7 +72,3 @@ public class TriggerZonaPorTag : MonoBehaviour
     }
 #endif
 }
-<<<<<<< Updated upstream
-    
-=======
->>>>>>> Stashed changes
