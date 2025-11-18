@@ -160,7 +160,7 @@ public class Menu3DNavigator : MonoBehaviour
         switch (name)
         {
             case "Jugar-Box":
-                SceneManager.LoadScene("Core"); // reemplaza por la escena real
+                SceneManager.LoadScene("cinematica"); // reemplaza por la escena real
                 break;
 
             case "Salir-Box":

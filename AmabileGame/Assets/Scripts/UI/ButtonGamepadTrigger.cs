@@ -1,23 +1,30 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;   // üëà Para cambiar de escena
 
 #if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem; // Nuevo Input System
+using UnityEngine.InputSystem;       // Nuevo Input System
 #endif
 
 public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Button button;
-    [Tooltip("Si est· activo, solo dispara cuando este botÛn est· seleccionado o bajo el cursor.")]
+    [Tooltip("Si est√° activo, solo dispara cuando este bot√≥n est√° seleccionado o bajo el cursor.")]
     [SerializeField] private bool requireFocus = true;
 
     private bool pointerOver = false;
 
     private void Reset()
     {
-        // Se asigna autom·ticamente si el script est· en el mismo GameObject que el Button
+        // Se asigna autom√°ticamente si el script est√° en el mismo GameObject que el Button
         button = GetComponent<Button>();
+    }
+
+    private void Awake()
+    {
+        if (!button)
+            button = GetComponent<Button>();
     }
 
     private void Update()
@@ -29,29 +36,29 @@ public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         // Nuevo Input System (Gamepad)
 #if ENABLE_INPUT_SYSTEM
         if (Gamepad.current != null)
-            aPressed = Gamepad.current.aButton.wasPressedThisFrame;
+            aPressed = Gamepad.current.aButton.wasPressedThisFrame; // Bot√≥n A del mando
 #endif
 
-        // Input Manager cl·sico (mando)
-        aPressed |= Input.GetKeyDown(KeyCode.JoystickButton0);
+        // Input Manager cl√°sico (mando)
+        aPressed |= Input.GetKeyDown(KeyCode.JoystickButton0); // Bot√≥n A en la mayor√≠a de mandos
 
-        // Para probar f·cil con teclado en PC/Editor
-        aPressed |= Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space);
+        // Teclado: letra A
+        aPressed |= Input.GetKeyDown(KeyCode.A);
 
         if (!aPressed) return;
 
-        // Evita que A dispare este botÛn si no est· enfocado/hover, a menos que desmarques requireFocus
+        // Evita que A dispare este bot√≥n si no est√° enfocado/hover, a menos que desmarques requireFocus
         bool isSelected = EventSystem.current &&
                           EventSystem.current.currentSelectedGameObject == gameObject;
 
         if (!requireFocus || pointerOver || isSelected)
         {
-            // Ejecuta la acciÛn asignada al onClick del Button
+            // Ejecuta la acci√≥n asignada al onClick del Button
             button.onClick.Invoke();
         }
     }
 
-    // Cuando el mouse pasa por encima, marcamos hover y seleccionamos para navegaciÛn con mando
+    // Cuando el mouse pasa por encima, marcamos hover y seleccionamos para navegaci√≥n con mando
     public void OnPointerEnter(PointerEventData eventData)
     {
         pointerOver = true;
@@ -61,5 +68,19 @@ public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         pointerOver = false;
+    }
+
+    // üëâ Funci√≥n para asignar a un bot√≥n del Canvas y cambiar de escena
+    // La puedes usar en el OnClick del Button y pasar el nombre de la escena desde el inspector.
+    public void GoToScene(string sceneName)
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogWarning("[ButtonGamepadTrigger] Nombre de escena vac√≠o en GoToScene en: " + gameObject.name);
+        }
     }
 }

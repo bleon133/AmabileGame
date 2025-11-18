@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonGamepadTrigger
   button: {fileID: 182265946}
-  requireFocus: 1
+  requireFocus: 0
 --- !u!222 &182265949
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: b4ffe69af63b4f84baea460404571545, type: 2}
+  m_Texture: {fileID: 8400000, guid: 37f250f1599cb3d419300017588edf81, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1411,11 +1411,11 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533931657}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 8406ee704989d594dbe8668bd342f96e, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 3e016645cf4781142a08f36911ab14bf, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: b4ffe69af63b4f84baea460404571545, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 37f250f1599cb3d419300017588edf81, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -1425,12 +1425,14 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -1494,7 +1496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: b4ffe69af63b4f84baea460404571545, type: 2}
+  m_Texture: {fileID: 8400000, guid: aba5c075aa2cd1a42b0809f9ad717078, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1767,6 +1769,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 742788201}
+        m_TargetAssemblyTypeName: ButtonGamepadTrigger, Assembly-CSharp
+        m_MethodName: GoToScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Core
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &742788200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1810,7 +1824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonGamepadTrigger
   button: {fileID: 742788199}
-  requireFocus: 1
+  requireFocus: 0
 --- !u!222 &742788202
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1970,7 +1984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonGamepadTrigger
   button: {fileID: 768580649}
-  requireFocus: 1
+  requireFocus: 0
 --- !u!222 &768580652
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2218,7 +2232,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: b4ffe69af63b4f84baea460404571545, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: aba5c075aa2cd1a42b0809f9ad717078, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -2568,7 +2582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonGamepadTrigger
   button: {fileID: 1277806962}
-  requireFocus: 1
+  requireFocus: 0
 --- !u!222 &1277806965
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2811,7 +2825,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404449789}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 8406ee704989d594dbe8668bd342f96e, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 234696c90df8d264797df21bdfd2f14a, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2825,12 +2839,14 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -3984,7 +4000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonGamepadTrigger
   button: {fileID: 1960094438}
-  requireFocus: 1
+  requireFocus: 0
 --- !u!222 &1960094441
 CanvasRenderer:
   m_ObjectHideFlags: 0
