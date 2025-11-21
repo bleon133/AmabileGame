@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;   // 👈 Para cambiar de escena
+using UnityEngine.SceneManagement;
 
 #if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;       // Nuevo Input System
+using UnityEngine.InputSystem;
 #endif
 
 public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -17,7 +17,6 @@ public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private void Reset()
     {
-        // Se asigna automáticamente si el script está en el mismo GameObject que el Button
         button = GetComponent<Button>();
     }
 
@@ -33,32 +32,25 @@ public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
 
         bool aPressed = false;
 
-        // Nuevo Input System (Gamepad)
 #if ENABLE_INPUT_SYSTEM
         if (Gamepad.current != null)
-            aPressed = Gamepad.current.aButton.wasPressedThisFrame; // Botón A del mando
+            aPressed = Gamepad.current.aButton.wasPressedThisFrame;
 #endif
 
-        // Input Manager clásico (mando)
-        aPressed |= Input.GetKeyDown(KeyCode.JoystickButton0); // Botón A en la mayoría de mandos
-
-        // Teclado: letra A
+        aPressed |= Input.GetKeyDown(KeyCode.JoystickButton0);
         aPressed |= Input.GetKeyDown(KeyCode.A);
 
         if (!aPressed) return;
 
-        // Evita que A dispare este botón si no está enfocado/hover, a menos que desmarques requireFocus
         bool isSelected = EventSystem.current &&
                           EventSystem.current.currentSelectedGameObject == gameObject;
 
         if (!requireFocus || pointerOver || isSelected)
         {
-            // Ejecuta la acción asignada al onClick del Button
             button.onClick.Invoke();
         }
     }
 
-    // Cuando el mouse pasa por encima, marcamos hover y seleccionamos para navegación con mando
     public void OnPointerEnter(PointerEventData eventData)
     {
         pointerOver = true;
@@ -70,17 +62,40 @@ public class ButtonGamepadTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         pointerOver = false;
     }
 
-    // 👉 Función para asignar a un botón del Canvas y cambiar de escena
-    // La puedes usar en el OnClick del Button y pasar el nombre de la escena desde el inspector.
+    // 👉 Llamar desde el OnClick del botón
     public void GoToScene(string sceneName)
     {
-        if (!string.IsNullOrEmpty(sceneName))
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        else
+        if (string.IsNullOrEmpty(sceneName))
         {
             Debug.LogWarning("[ButtonGamepadTrigger] Nombre de escena vacío en GoToScene en: " + gameObject.name);
+            return;
+        }
+
+        // 1) Limpia cualquier objeto que haya sido marcado con DontDestroyOnLoad
+        LimpiarObjetosPersistentes();
+
+        // 2) Carga la nueva escena en modo SINGLE (destruye la escena anterior)
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    /// <summary>
+    /// Destruye todos los objetos que estén en la escena especial "DontDestroyOnLoad"
+    /// para que la próxima escena quede totalmente limpia.
+    /// </summary>
+    private void LimpiarObjetosPersistentes()
+    {
+        // Escena especial donde Unity mete los objetos marcados con DontDestroyOnLoad
+        var ddolScene = SceneManager.GetSceneByName("DontDestroyOnLoad");
+        if (!ddolScene.IsValid()) return;
+
+        var rootObjects = ddolScene.GetRootGameObjects();
+        foreach (var root in rootObjects)
+        {
+            // Si hay algo que SÍ quieres conservar siempre (por ejemplo música),
+            // puedes filtrarlo aquí por tag, nombre, etc.
+            // if (root.CompareTag("NoDestruir")) continue;
+
+            Destroy(root);
         }
     }
 }
