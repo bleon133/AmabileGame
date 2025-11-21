@@ -4,35 +4,28 @@ using UnityEngine;
 public class EnemyStats : LivingEntity
 {
     [Header("Referencias (opcionales)")]
-    [Tooltip("Animator del enemigo, opcional. Si no hay, usará solo los logs.")]
     [SerializeField] private Animator animator;
-
-    [Tooltip("Script de movimiento (IA/NavMesh). Si no hay, se ignora.")]
     [SerializeField] private MovimientoEnemigo movimiento;
-
-    [Tooltip("Configuración de parámetros base del enemigo, opcional.")]
     [SerializeField] private ConfiguracionEnemigo config;
+
+    [Header("Stagger (bloqueo temporal al recibir daño)")]
+    [SerializeField] private float staggerDuration = 0.35f; // tiempo de bloqueo al recibir daño
+    private bool isStaggered = false;
 
     [Header("Depuración")]
     [SerializeField] private bool autoDestroyOnDeath = true;
     [SerializeField] private float destroyDelay = 5f;
 
-    // Validación interna
     private bool hasTakeDamage;
     private bool hasDie;
 
-    // ============================================================
-    // ?? Inicialización
-    // ============================================================
     protected override void Awake()
     {
         base.Awake();
 
-        // Intentar detectar referencias automáticamente si no se asignaron
         if (!animator) animator = GetComponentInChildren<Animator>();
         if (!movimiento) movimiento = GetComponent<MovimientoEnemigo>();
 
-        // Verificar si el Animator tiene los parámetros esperados
         if (animator && animator.runtimeAnimatorController != null)
         {
             foreach (var param in animator.parameters)
@@ -43,12 +36,10 @@ public class EnemyStats : LivingEntity
                     hasDie = true;
             }
         }
-
-        Debug.Log($"[EnemyStats] ? Inicializado '{gameObject.name}' | Animator={(animator ? "Sí" : "No")} | Movimiento={(movimiento ? "Sí" : "No")}");
     }
 
     // ============================================================
-    // ?? Daño
+    //  DAÑO + BLOQUEO TEMPORAL
     // ============================================================
     public override void TakeDamage(float amount, DamageType damageType, Vector3 hitPoint, GameObject source)
     {
@@ -56,38 +47,58 @@ public class EnemyStats : LivingEntity
 
         if (!IsAlive) return;
 
-        Debug.Log($"[EnemyStats] ?? '{gameObject.name}' recibió {amount} de daño (vida restante: {GetCurrentHealth()}/{GetMaxHealth()})");
-
-        // Si hay animador, dispara animación
+        // Reproduce animación
         if (animator && hasTakeDamage)
             animator.SetTrigger("TakeDamage");
+
+        // ? Bloqueo temporal
+        if (!isStaggered)
+            StartCoroutine(ApplyStagger());
+    }
+
+    private System.Collections.IEnumerator ApplyStagger()
+    {
+        isStaggered = true;
+
+        if (movimiento != null)
+        {
+            movimiento.Detener();        // Detiene el movimiento YA
+            movimiento.enabled = false;  // Evita que el script siga cambiando el NavMeshAgent
+        }
+
+        yield return new WaitForSeconds(staggerDuration);
+
+        // Si murió durante el stagger, no reactivar nada
+        if (!IsAlive) yield break;
+
+        if (movimiento != null)
+        {
+            movimiento.enabled = true;   // vuelve la IA
+            movimiento.Reanudar();       // permite seguir caminando
+        }
+
+        isStaggered = false;
     }
 
     // ============================================================
-    // ?? Muerte
+    //  MUERTE
     // ============================================================
     protected override void Die()
     {
         base.Die();
 
-        Debug.Log($"[EnemyStats] ?? '{gameObject.name}' ha muerto.");
-
-        // Detener movimiento si existe
         if (movimiento)
         {
             movimiento.Detener();
             movimiento.enabled = false;
         }
 
-        // Reproducir animación si existe
         if (animator && hasDie)
             animator.SetTrigger("Die");
 
-        // Desactivar colisión física para evitar interacción post-muerte
         var col = GetComponent<Collider>();
         if (col) col.enabled = false;
 
-        // Auto-destruir después de unos segundos (si está activado)
         if (autoDestroyOnDeath)
             Destroy(gameObject, destroyDelay);
     }

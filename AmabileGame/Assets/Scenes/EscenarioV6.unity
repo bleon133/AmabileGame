@@ -41551,6 +41551,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5361520512668965725, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
+      propertyPath: maxAttackDuration
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6812049460233147084, guid: deed6efc6b8da3f4480eb240f1344815, type: 3}
       propertyPath: m_LocalPosition.x
       value: 130.2
